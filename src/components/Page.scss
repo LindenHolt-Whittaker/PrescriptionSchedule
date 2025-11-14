@@ -1,0 +1,14 @@
+@use '../styles/mixins' as mixins;
+
+.Page {
+  &__title {
+    font-size: 4rem;
+    background-color: #b3b0b8;
+  }
+  
+  &__content {
+    padding: 2rem;
+    @include mixins.flex-center;
+    background-color: #d4d4d4;
+  }
+}

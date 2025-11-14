@@ -1,10 +1,11 @@
 // import './OnboardingForm.css'
+import Page from '../components/Page';
 
 function OnboardingForm() {
   return (
-    <>
-      Onboarding
-    </>
+    <Page title="Onboarding">
+      Form
+    </Page>
   )
 }
 
