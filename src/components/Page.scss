@@ -1,14 +1,38 @@
-@use '../styles/mixins' as mixins;
+@use "../styles/colors" as colors;
 
 .Page {
-  &__title {
-    font-size: 4rem;
-    background-color: #b3b0b8;
-  }
-  
-  &__content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__header,
+  &__content,
+  &__footer {
     padding: 2rem;
-    @include mixins.flex-center;
-    background-color: #d4d4d4;
+  }
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    font-size: 4rem;
+
+    color: colors.$text-header;
+    background-color: colors.$bg-light;
+  }
+
+  &__content {
+    color: colors.$text-primary;
+    background-color: colors.$bg-white;
+    flex-grow: 1;
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+
+    color: colors.$text-secondary;
+    background-color: colors.$bg-light;
   }
 }

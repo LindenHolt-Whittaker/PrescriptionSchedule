@@ -1,4 +1,4 @@
-// import './Home.css'
+// import './Home.scss'
 import Page from '../components/Page';
 
 function Home() {

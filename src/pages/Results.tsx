@@ -1,4 +1,4 @@
-// import './Results.css'
+// import './Results.scss'
 import Page from '../components/Page';
 
 function Results() {

@@ -1,0 +1,26 @@
+// Primary
+$blue: #007bff;
+$blue-dark: #0056b3;
+$blue-light: #3498db;
+
+// Neutrals
+$white: #ffffff;
+$gray-lightest: #f8f9fa;
+$gray-lighter: #f0f0f0;
+$gray-light: #e0e0e0;
+$gray: #999;
+$gray-dark: #6c757d;
+$gray-darker: #495057;
+$gray-darkest: #212529;
+$black: #000000;
+
+// --- Applied colors ---
+
+// Text
+$text-header: $blue;
+$text-primary: $gray-darkest;
+$text-secondary: $blue-light;
+
+// Backgrounds
+$bg-white: $white;
+$bg-light: $gray-lighter;

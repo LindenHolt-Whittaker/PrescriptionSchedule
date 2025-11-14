@@ -6,7 +6,7 @@ import './App.scss'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <BrowserRouter>      
         <Routes>
           <Route path="/" element={<Home />} />
@@ -14,7 +14,7 @@ function App() {
           <Route path="/results" element={<Results />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   )
 }
 
