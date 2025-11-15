@@ -10,10 +10,16 @@
     flex-direction: column;
   }
 
-  label {
+  label,
+  legend {
     font-weight: 600;
     color: colors.$text-primary;
     margin: 2rem 0 0.25rem;
+  }
+
+  fieldset {
+    margin: 2rem 0 0.25rem;
+    border: none;
   }
 
   input[type="text"],
@@ -73,5 +79,9 @@
       transform: translateY(0);
       background-color: colors.$blue-light;
     }
+  }
+
+  .error {
+    color: red;
   }
 }
