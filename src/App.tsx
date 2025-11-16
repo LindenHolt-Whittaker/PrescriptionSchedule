@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import OnboardingForm from './pages/OnboardingForm'
-import Results from './pages/Results'
+import Schedule from './pages/Schedule'
 import './App.scss'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/onboarding" element={<OnboardingForm />} />
-          <Route path="/results" element={<Results />} />
+          <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -2,13 +2,13 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import { type OnboardingFormData } from "./OnboardingForm";
 import Page from "../components/Page";
-import "./Results.scss";
+import "./Schedule.scss";
 
 const DataField = ({ children }: { children: React.ReactNode }) => (
   <div className="DataField">{children}</div>
 );
 
-const Results = () => {
+const Schedule = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -54,7 +54,7 @@ const Results = () => {
     .join(", ");
 
   return (
-    <Page title="Your prescription schedule" className="Results">
+    <Page title="Your prescription schedule" className="Schedule">
       <DataField>{formattedDate}</DataField>
       <DataField>{selectedDays}</DataField>
       <DataField>{scheduleData.prescriptionType}</DataField>
@@ -69,4 +69,4 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default Schedule;

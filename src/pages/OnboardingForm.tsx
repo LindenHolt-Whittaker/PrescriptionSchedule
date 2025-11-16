@@ -62,7 +62,7 @@ const OnboardingForm = () => {
       data: JSON.stringify(data)
     });
     
-    navigate(`/results?${params.toString()}`);
+    navigate(`/schedule?${params.toString()}`);
   };
 
   const prescriptionType = watch("prescriptionType");
