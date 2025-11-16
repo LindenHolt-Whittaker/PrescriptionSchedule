@@ -44,7 +44,7 @@ const OnboardingForm = () => {
   return (
     <Page title="Onboarding" className="OnboardingForm">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="initialDate">Initial Date</label>
+        <label htmlFor="initialDate">When is this prescription to be scheduled for?</label>
         <Controller
           control={control}
           name="initialDate"
@@ -59,7 +59,7 @@ const OnboardingForm = () => {
         />
 
         <fieldset className="OnboardingForm__checkboxGroup">
-          <legend>Days Available for Pickup</legend>
+          <legend>What days will you be available to get your prescription?</legend>
           {DAYS.map((day) => (
             <label key={day} className="checkbox-day">
               <input
@@ -95,7 +95,7 @@ const OnboardingForm = () => {
           )}
         </fieldset>
 
-        <label htmlFor="prescriptionType">Type of Prescription</label>
+        <label htmlFor="prescriptionType">What type of prescription is this?</label>
         <select
           id="prescriptionType"
           {...register("prescriptionType", {
@@ -112,7 +112,7 @@ const OnboardingForm = () => {
         )}
 
         <label htmlFor="dosage">
-          {isDosageChanging ? "Initial Dosage (mg)" : "Dosage (mg)"}
+          {isDosageChanging ? "How much is the initial dosage? (mg)" : "How much is the dosage? (mg)"}
         </label>
         <input
           type="number"
@@ -130,8 +130,7 @@ const OnboardingForm = () => {
         {isDosageChanging && (
           <>
             <label htmlFor="changeAmount">
-              {prescriptionType === "increasing" ? "Increase" : "Decrease"}{" "}
-              Amount (mg)
+              How much is the dosage {prescriptionType === "increasing" ? 'increasing' : 'reducing'} by? (mg)
             </label>
             <input
               type="number"
@@ -151,7 +150,7 @@ const OnboardingForm = () => {
               <span className="error">{errors.changeAmount.message}</span>
             )}
 
-            <label htmlFor="changeFrequency">Every (days)</label>
+            <label htmlFor="changeFrequency">How frequently (in days) does this dosage {prescriptionType === "increasing" ? 'increase' : 'reduce'}?</label>
             <input
               type="number"
               id="changeFrequency"
