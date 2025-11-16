@@ -1,5 +1,5 @@
 // import './Home.scss'
-import Page from '../components/Page';
+import Page from '../../components/Page';
 
 function Home() {
   return (

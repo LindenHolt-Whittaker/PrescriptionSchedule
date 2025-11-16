@@ -1,40 +1,12 @@
 import { useForm, Controller, type FieldError } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import Page from "../components/Page";
+import Page from "../../components/Page";
+import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
+import { type PrescriptionData } from "../../types/prescriptionData";
 import "./OnboardingForm.scss";
-
-// Days vars - get type and default values from days array
-const days = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-] as const;
-
-type DayName = (typeof days)[number];
-type AvailableDays = Record<DayName, boolean>;
-
-const getDefaultDays = (): AvailableDays => {
-  return days.reduce(
-    (acc, day) => ({ ...acc, [day]: false }),
-    {} as AvailableDays
-  );
-};
-
-export interface OnboardingFormData {
-  initialDate: Date;
-  availableDays: AvailableDays;
-  prescriptionType: "stabilisation" | "reducing" | "increasing" | "";
-  dosage: number;
-  changeAmount?: number;
-  changeFrequency?: number;
-}
 
 const OnboardingForm = () => {
   const {
@@ -44,7 +16,7 @@ const OnboardingForm = () => {
     trigger,
     watch,
     formState: { errors, isSubmitted },
-  } = useForm<OnboardingFormData>({
+  } = useForm<PrescriptionData>({
     defaultValues: {
       initialDate: new Date(),
       availableDays: getDefaultDays(),
@@ -57,11 +29,11 @@ const OnboardingForm = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (data: OnboardingFormData) => {
+  const onSubmit = (data: PrescriptionData) => {
     const params = new URLSearchParams({
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
     });
-    
+
     navigate(`/schedule?${params.toString()}`);
   };
 
@@ -88,7 +60,7 @@ const OnboardingForm = () => {
 
         <fieldset className="OnboardingForm__checkboxGroup">
           <legend>Days Available for Pickup</legend>
-          {days.map((day) => (
+          {DAYS.map((day) => (
             <label key={day} className="checkbox-day">
               <input
                 type="checkbox"
@@ -101,12 +73,12 @@ const OnboardingForm = () => {
                   },
                   onChange: () => {
                     if (isSubmitted) {
-                      days.forEach((d) => trigger(`availableDays.${d}`));
+                      DAYS.forEach((d) => trigger(`availableDays.${d}`));
                     }
                   },
                 })}
               />
-              <span>{day.charAt(0).toUpperCase() + day.slice(1)}</span>
+              <span>{capitalizeDayName(day)}</span>
             </label>
           ))}
 
@@ -140,9 +112,7 @@ const OnboardingForm = () => {
         )}
 
         <label htmlFor="dosage">
-          {isDosageChanging
-            ? "Initial Dosage (mg)"
-            : "Dosage (mg)"}
+          {isDosageChanging ? "Initial Dosage (mg)" : "Dosage (mg)"}
         </label>
         <input
           type="number"
