@@ -29,8 +29,10 @@ const getDefaultDays = (): AvailableDays => {
 interface OnboardingFormData {
   initialDate: Date;
   availableDays: AvailableDays;
-  prescriptionType: string;
+  prescriptionType: "stabilisation" | "reducing" | "increasing" | "";
   dosage: number;
+  changeAmount?: number;
+  changeFrequency?: number;
 }
 
 const OnboardingForm = () => {
@@ -39,19 +41,26 @@ const OnboardingForm = () => {
     handleSubmit,
     control,
     trigger,
+    watch,
     formState: { errors, isSubmitted },
   } = useForm<OnboardingFormData>({
     defaultValues: {
       initialDate: new Date(),
       availableDays: getDefaultDays(),
       prescriptionType: "",
-      dosage: 1,
+      dosage: 0,
+      changeAmount: undefined,
+      changeFrequency: undefined,
     },
   });
 
   const onSubmit = (data: OnboardingFormData) => {
     console.log("Form submitted:", data);
   };
+
+  const prescriptionType = watch("prescriptionType");
+  const isDosageChanging =
+    prescriptionType === "increasing" || prescriptionType === "reducing";
 
   return (
     <Page title="Onboarding" className="OnboardingForm">
@@ -81,13 +90,10 @@ const OnboardingForm = () => {
                     const count = Object.values(
                       formValues.availableDays
                     ).filter(Boolean).length;
-                    return (
-                      (count >= 2 && count <= 7) ||
-                      "Please select between 2 and 7 days"
-                    );
+                    return count >= 2 || "Please select more than 2 days";
                   },
                   onChange: () => {
-                    if(isSubmitted) {
+                    if (isSubmitted) {
                       days.forEach((d) => trigger(`availableDays.${d}`));
                     }
                   },
@@ -118,25 +124,70 @@ const OnboardingForm = () => {
           })}
         >
           <option value="">Select prescription type</option>
+          <option value="stabilisation">Stabilisation</option>
           <option value="reducing">Reducing</option>
           <option value="increasing">Increasing</option>
-          <option value="stabilising">Stabilising</option>
         </select>
         {errors.prescriptionType && (
           <span className="error">{errors.prescriptionType.message}</span>
         )}
 
-        <label htmlFor="dosage">Dosage (mg)</label>
+        <label htmlFor="dosage">
+          {isDosageChanging
+            ? "Initial Dosage (mg)"
+            : "Dosage (mg)"}
+        </label>
         <input
           type="number"
           id="dosage"
           {...register("dosage", {
-            min: { value: 1, message: "Dosage must be at least 1mg" },
+            min: { value: 0, message: "Dosage must be at least 0mg" },
             max: { value: 60, message: "Dosage cannot exceed 60mg" },
+            required: "Please provide dosage amount",
           })}
         />
         {errors.dosage && (
           <span className="error">{errors.dosage.message}</span>
+        )}
+
+        {isDosageChanging && (
+          <>
+            <label htmlFor="changeAmount">
+              {prescriptionType === "increasing" ? "Increase" : "Decrease"}{" "}
+              Amount (mg)
+            </label>
+            <input
+              type="number"
+              id="changeAmount"
+              {...register("changeAmount", {
+                required: isDosageChanging
+                  ? "Change amount is required"
+                  : false,
+                min: {
+                  value: 1,
+                  message: "Change amount must be at least 1mg",
+                },
+                max: { value: 30, message: "Change amount cannot exceed 30mg" },
+              })}
+            />
+            {errors.changeAmount && (
+              <span className="error">{errors.changeAmount.message}</span>
+            )}
+
+            <label htmlFor="changeFrequency">Every (days)</label>
+            <input
+              type="number"
+              id="changeFrequency"
+              {...register("changeFrequency", {
+                required: isDosageChanging ? "Frequency is required" : false,
+                min: { value: 1, message: "Frequency must be at least 1 day" },
+                max: { value: 14, message: "Frequency cannot exceed 14 days" },
+              })}
+            />
+            {errors.changeFrequency && (
+              <span className="error">{errors.changeFrequency.message}</span>
+            )}
+          </>
         )}
 
         <button type="submit">Submit Onboarding</button>
