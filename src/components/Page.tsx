@@ -1,7 +1,7 @@
 import "./Page.scss";
 
 type PageProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
   className?: string;
 };
