@@ -1,7 +1,4 @@
-import { DAYS } from '../utils/days';
-
-export type DayName = (typeof DAYS)[number];
-export type AvailableDays = Record<DayName, boolean>;
+import { type AvailableDays } from "./days";
 
 export interface PrescriptionData {
   initialDate: Date;

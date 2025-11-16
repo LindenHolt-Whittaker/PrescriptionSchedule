@@ -1,0 +1,9 @@
+.PrescriptionCalendar {
+  li {
+    margin-bottom: 2rem;
+  }
+
+  &__pickupDay {
+    color: yellow;
+  }
+}

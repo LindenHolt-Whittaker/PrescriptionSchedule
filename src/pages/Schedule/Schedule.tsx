@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import Page from "../../components/Page";
+import PrescriptionCalendar from "../../components/PrescriptionCalendar";
 import { formatDate } from "../../utils/date";
 import { formatSelectedDays } from "../../utils/days";
 import { validatePrescriptionData } from "../../utils/validate";
@@ -40,6 +41,8 @@ const Schedule = () => {
       {scheduleData.changeFrequency && (
         <DataField>{scheduleData.changeFrequency}</DataField>
       )}
+
+      <PrescriptionCalendar scheduleData={scheduleData} />
     </Page>
   );
 };
