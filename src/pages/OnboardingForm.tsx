@@ -1,4 +1,5 @@
 import { useForm, Controller, type FieldError } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -26,7 +27,7 @@ const getDefaultDays = (): AvailableDays => {
   );
 };
 
-interface OnboardingFormData {
+export interface OnboardingFormData {
   initialDate: Date;
   availableDays: AvailableDays;
   prescriptionType: "stabilisation" | "reducing" | "increasing" | "";
@@ -54,8 +55,14 @@ const OnboardingForm = () => {
     },
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = (data: OnboardingFormData) => {
-    console.log("Form submitted:", data);
+    const params = new URLSearchParams({
+      data: JSON.stringify(data)
+    });
+    
+    navigate(`/results?${params.toString()}`);
   };
 
   const prescriptionType = watch("prescriptionType");

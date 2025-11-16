@@ -1,11 +1,12 @@
 import "./Page.scss";
 
-type PageProps = React.PropsWithChildren<{
+type PageProps = {
+  children: React.ReactNode;
   title?: string;
   className?: string;
-}>;
+};
 
-const Page: React.FC<PageProps> = ({ title, className, children }) => {
+const Page = ({ title, className, children }: PageProps) => {
   return (
     <div className={`Page ${className ? className : ''}`}>
       <div className="Page__header">{title}</div>
