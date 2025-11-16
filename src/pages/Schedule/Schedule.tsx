@@ -4,7 +4,7 @@ import Page from "../../components/Page";
 import PrescriptionCalendar from "../../components/PrescriptionCalendar";
 import { formatDate } from "../../utils/date";
 import { formatSelectedDays } from "../../utils/days";
-import { validatePrescriptionData } from "../../utils/validate";
+import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import "./Schedule.scss";
 

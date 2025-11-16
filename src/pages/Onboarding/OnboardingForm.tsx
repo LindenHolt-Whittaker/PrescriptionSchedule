@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import Page from "../../components/Page";
 import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
+import { VALIDATION_RULES } from "../../validators/prescription";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import "./OnboardingForm.scss";
 
@@ -44,7 +45,9 @@ const OnboardingForm = () => {
   return (
     <Page title="Onboarding" className="OnboardingForm">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="initialDate">When is this prescription to be scheduled for?</label>
+        <label htmlFor="initialDate">
+          When is this prescription to be scheduled for?
+        </label>
         <Controller
           control={control}
           name="initialDate"
@@ -59,7 +62,9 @@ const OnboardingForm = () => {
         />
 
         <fieldset className="OnboardingForm__checkboxGroup">
-          <legend>What days will you be available to get your prescription?</legend>
+          <legend>
+            What days will you be available to get your prescription?
+          </legend>
           {DAYS.map((day) => (
             <label key={day} className="checkbox-day">
               <input
@@ -69,7 +74,10 @@ const OnboardingForm = () => {
                     const count = Object.values(
                       formValues.availableDays
                     ).filter(Boolean).length;
-                    return count >= 2 || "Please select more than 2 days";
+                    return (
+                      count >= VALIDATION_RULES.availableDays.min ||
+                      `Please select at least ${VALIDATION_RULES.availableDays.min} day${VALIDATION_RULES.availableDays.min > 1 ? "s" : ""}`
+                    );
                   },
                   onChange: () => {
                     if (isSubmitted) {
@@ -95,7 +103,9 @@ const OnboardingForm = () => {
           )}
         </fieldset>
 
-        <label htmlFor="prescriptionType">What type of prescription is this?</label>
+        <label htmlFor="prescriptionType">
+          What type of prescription is this?
+        </label>
         <select
           id="prescriptionType"
           {...register("prescriptionType", {
@@ -112,14 +122,20 @@ const OnboardingForm = () => {
         )}
 
         <label htmlFor="dosage">
-          {isDosageChanging ? "How much is the initial dosage? (mg)" : "How much is the dosage? (mg)"}
+          What is the {isDosageChanging ? "initial dosage" : "dosage"}? (mg)
         </label>
         <input
           type="number"
           id="dosage"
           {...register("dosage", {
-            min: { value: 0, message: "Dosage must be at least 0mg" },
-            max: { value: 60, message: "Dosage cannot exceed 60mg" },
+            min: {
+              value: VALIDATION_RULES.dosage.min,
+              message: `Dosage must be at least ${VALIDATION_RULES.dosage.min}mg`,
+            },
+            max: {
+              value: VALIDATION_RULES.dosage.max,
+              message: `Dosage cannot exceed ${VALIDATION_RULES.dosage.max}mg`,
+            },
             required: "Please provide dosage amount",
           })}
         />
@@ -130,7 +146,9 @@ const OnboardingForm = () => {
         {isDosageChanging && (
           <>
             <label htmlFor="changeAmount">
-              How much is the dosage {prescriptionType === "increasing" ? 'increasing' : 'reducing'} by? (mg)
+              How much is the dosage{" "}
+              {prescriptionType === "increasing" ? "increasing" : "reducing"}{" "}
+              by? (mg)
             </label>
             <input
               type="number"
@@ -140,24 +158,39 @@ const OnboardingForm = () => {
                   ? "Change amount is required"
                   : false,
                 min: {
-                  value: 1,
-                  message: "Change amount must be at least 1mg",
+                  value: VALIDATION_RULES.changeAmount.min,
+                  message: `Change amount must be at least ${VALIDATION_RULES.changeAmount.min}mg`,
                 },
-                max: { value: 30, message: "Change amount cannot exceed 30mg" },
+                max: {
+                  value: VALIDATION_RULES.changeAmount.max,
+                  message: `Change amount cannot exceed ${VALIDATION_RULES.changeAmount.max}mg`,
+                },
               })}
             />
             {errors.changeAmount && (
               <span className="error">{errors.changeAmount.message}</span>
             )}
 
-            <label htmlFor="changeFrequency">How frequently (in days) does this dosage {prescriptionType === "increasing" ? 'increase' : 'reduce'}?</label>
+            <label htmlFor="changeFrequency">
+              How frequently is the prescription{" "}
+              {prescriptionType === "increasing" ? "increasing" : "decreasing"}?
+              (days)
+            </label>
             <input
               type="number"
               id="changeFrequency"
               {...register("changeFrequency", {
                 required: isDosageChanging ? "Frequency is required" : false,
-                min: { value: 1, message: "Frequency must be at least 1 day" },
-                max: { value: 14, message: "Frequency cannot exceed 14 days" },
+                min: {
+                  value: VALIDATION_RULES.changeFrequency.min,
+                  message: `Frequency must be at least ${
+                    VALIDATION_RULES.changeFrequency.min
+                  } day${VALIDATION_RULES.changeFrequency.min > 1 ? "s" : ""}`,
+                },
+                max: {
+                  value: VALIDATION_RULES.changeFrequency.max,
+                  message: `Frequency cannot exceed ${VALIDATION_RULES.changeFrequency.max} days`,
+                },
               })}
             />
             {errors.changeFrequency && (
