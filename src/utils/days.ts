@@ -1,4 +1,4 @@
-import {type AvailableDays} from "../types/prescriptionData";
+import {type AvailableDays} from "../types/days";
 
 export const DAYS = [
   "monday",

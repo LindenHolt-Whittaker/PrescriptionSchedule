@@ -11,7 +11,6 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
 
   return (
     <div className="PrescriptionCalendar">
-      <h2>Prescription Schedule</h2>
       <div className="PrescriptionCalendar__grid">
         {schedule.map((day) => (
           <div

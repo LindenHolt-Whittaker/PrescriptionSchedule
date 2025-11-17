@@ -1,8 +1,12 @@
 @use "../../styles/mixins" as mixins;
 
 .Schedule {
-  .DataField {
-    margin-bottom: 2rem;
+  &__dataFieldGroup {
+    text-align: left;
+  }
+
+  &__dataField {
+    margin-bottom: 1rem;
   }
 
   .PrescriptionCalendarContainer {

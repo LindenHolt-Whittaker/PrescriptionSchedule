@@ -9,10 +9,6 @@ import { formatSelectedDays } from "../../utils/days";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import "./Schedule.scss";
 
-const DataField = ({ children }: { children: React.ReactNode }) => (
-  <div className="DataField">{children}</div>
-);
-
 const Schedule = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -33,19 +29,32 @@ const Schedule = () => {
 
   return (
     <Page title="Your prescription schedule" className="Schedule">
-      <DataField>{formatLongDate(scheduleData.initialDate)}</DataField>
-      <DataField>{formatSelectedDays(scheduleData.availableDays)}</DataField>
-      <DataField>{scheduleData.prescriptionType}</DataField>
-      <DataField>{scheduleData.dosage}</DataField>
-      {scheduleData.changeAmount && (
-        <DataField>{scheduleData.changeAmount}</DataField>
-      )}
-      {scheduleData.changeFrequency && (
-        <DataField>{scheduleData.changeFrequency}</DataField>
-      )}
-
       <div className="PrescriptionCalendarContainer">
         <PrescriptionCalendar scheduleData={scheduleData} />
+      </div>
+
+      <div className="Schedule__dataFieldGroup">
+        <div className="Schedule__dataField">
+          {formatLongDate(scheduleData.initialDate)}
+        </div>
+        <div className="Schedule__dataField">
+          {formatSelectedDays(scheduleData.availableDays)}
+        </div>
+        <div className="Schedule__dataField">
+          {scheduleData.prescriptionType.charAt(0).toUpperCase() +
+            scheduleData.prescriptionType.slice(1)}
+        </div>
+        <div className="Schedule__dataField">{scheduleData.dosage}mg</div>
+        {scheduleData.changeAmount && (
+          <div className="Schedule__dataField">
+            {scheduleData.changeAmount}mg
+          </div>
+        )}
+        {scheduleData.changeFrequency && (
+          <div className="Schedule__dataField">
+            Every {scheduleData.changeFrequency} days
+          </div>
+        )}
       </div>
     </Page>
   );
