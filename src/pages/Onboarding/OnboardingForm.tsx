@@ -46,7 +46,7 @@ const OnboardingForm = () => {
 
   return (
     <Page title="Please provide your prescription information" className="OnboardingForm">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="OnboardingForm__form" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="initialDate">
           When is this prescription to be scheduled for?
         </label>
@@ -63,7 +63,7 @@ const OnboardingForm = () => {
           )}
         />
 
-        <fieldset className="OnboardingForm__checkboxGroup">
+        <fieldset className="OnboardingForm__form__checkboxGroup">
           <legend>
             What days will you be available to get your prescription?
           </legend>

@@ -9,9 +9,8 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  // TODO: Actually implement. Currently mock implementation
-  // for serialized schedule key in place of URL params, and better error page
-  const onScheduleKeySubmit = () => {
+  const onScheduleKeySubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent page reload
     navigate(`/schedule?k=${scheduleKey}`);
   };
 
@@ -26,17 +25,23 @@ const Header = () => {
         </NavLink>
       </div>
 
-      <div className={`Header__scheduleKeyInput ${
-            scheduleKey ? "Header__scheduleKeyInput--hasInput" : ""
-          }`}>
+      <form
+        onSubmit={onScheduleKeySubmit}
+        className={`Header__scheduleKey ${
+          scheduleKey ? "Header__scheduleKey--hasInput" : ""
+        }`}
+      >
         <input
+          className="Header__scheduleKey__input"
           type="text"
           name="scheduleKey"
-          placeholder="Enter Schedule Key ###"
+          placeholder="Enter Schedule Key #"
           onChange={(e) => setScheduleKey(e.target.value)}
         />
-        <button onClick={onScheduleKeySubmit}>➜</button>
-      </div>
+        <button className="Header__scheduleKey__button" type="submit">
+          ➜
+        </button>
+      </form>
     </div>
   );
 };

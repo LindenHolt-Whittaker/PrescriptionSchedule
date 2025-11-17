@@ -8,7 +8,7 @@
   background-color: colors.$bg-light;
 
   &__link,
-  &__scheduleKeyInput button {
+  &__scheduleKey__button {
     &:hover {
       background-color: colors.$gray-light;
     }
@@ -37,11 +37,11 @@
     }
   }
 
-  &__scheduleKeyInput {
+  &__scheduleKey {
     display: flex;
     align-items: center;
 
-    input[type="text"] {
+    &__input {
       height: 2rem;
       padding: 0 0.5rem;
       
@@ -49,27 +49,10 @@
 
       border: 1px solid colors.$gray-light;
       border-radius: 0.5rem;
-    }
-
-    button {
-      visibility: hidden;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 1.1rem;
-      color: colors.$gray-darker;
-      background-color: colors.$white;
-
-      // need .1rem to account for differing text/line-height between button and input
-      height: 2.1rem;
-      padding: 0 0.3rem 0.1rem;
-
-      border: 1px solid colors.$gray-light;
-      border-radius: 0 0.5rem 0.5rem 0;
-      border-left: none;
-
+      
+      z-index: 2;
+      position: relative;
+      
       transition: all 0.2s ease;
 
       &:focus {
@@ -79,13 +62,45 @@
       }
     }
 
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 1.1rem;
+      color: colors.$gray-darker;
+      background-color: colors.$white;
+
+      height: 2.1rem;
+      padding: 0 0.3rem 0.1rem;
+
+      border: 1px solid colors.$gray-light;
+      border-radius: 0 0.5rem 0.5rem 0;
+
+      position: relative;
+      
+      transform: translateX(-100%);
+      opacity: 0;
+      
+      transition: all 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: colors.$blue;
+        box-shadow: 0 0 0.25rem 0 colors.$blue-dark;
+
+        z-index: 3;
+      }
+    }
+
     &--hasInput {
-      input[type="text"] {
+      .Header__scheduleKey__input {
         border-radius: 0.5rem 0 0 0.5rem;
       }
 
-      button {
-        visibility: visible;
+      .Header__scheduleKey__button {
+        transform: translateX(-1px);
+        opacity: 1;
       }
     }
   }
