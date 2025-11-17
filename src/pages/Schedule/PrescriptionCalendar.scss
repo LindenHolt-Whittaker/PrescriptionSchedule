@@ -4,8 +4,14 @@
 .PrescriptionCalendar {
   max-width: 60rem;
 
-  li {
+  &__month {
+    color: colors.$gray;
     margin-bottom: 2rem;
+    
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
   }
 
   &__grid {
@@ -15,12 +21,14 @@
   }
   
   &__header {
+    color: colors.$gray-darker;
     font-weight: bold;
-    text-align: center;
+    
     padding: 0.5rem;
     margin-bottom: 0.5rem;
-    background: colors.$gray-lightest;
+
     border-radius: 0.5rem;
+    background: colors.$gray-lightest;
 
     &--weekend {
       background: colors.$gray-lighter;
@@ -28,11 +36,13 @@
   }
 
   &__day {
+    color: colors.$text-primary;
+    
     @include mixins.flex-center;
     flex-direction: column;
     aspect-ratio: 1 / 1;
     padding: 0.5rem;
-    min-height: 100px;
+
     background: colors.$gray-light;
     border: 2px solid colors.$gray-light;
     border-radius: 100%;
@@ -48,22 +58,12 @@
   }
 
   &__dayNumber {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    
-    margin-bottom: 0.5rem;
   }
 
   &__dosage {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: colors.$text-secondary;
-  }
-
-  &__pickupText {
-    color: colors.$text-highlight;
-
-    &--empty {
-      visibility: hidden;
-    }
   }
 }
