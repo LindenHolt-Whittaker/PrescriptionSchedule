@@ -2,7 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import Page from "../../components/Page";
 import PrescriptionCalendar from "../../components/PrescriptionCalendar";
-import { formatDate } from "../../utils/date";
+import { formatLongDate } from "../../utils/date";
 import { formatSelectedDays } from "../../utils/days";
 import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import { type PrescriptionData } from "../../types/prescriptionData";
@@ -31,7 +31,7 @@ const Schedule = () => {
 
   return (
     <Page title="Your prescription schedule" className="Schedule">
-      <DataField>{formatDate(scheduleData.initialDate)}</DataField>
+      <DataField>{formatLongDate(scheduleData.initialDate)}</DataField>
       <DataField>{formatSelectedDays(scheduleData.availableDays)}</DataField>
       <DataField>{scheduleData.prescriptionType}</DataField>
       <DataField>{scheduleData.dosage}</DataField>
@@ -42,7 +42,9 @@ const Schedule = () => {
         <DataField>{scheduleData.changeFrequency}</DataField>
       )}
 
-      <PrescriptionCalendar scheduleData={scheduleData} />
+      <div className="PrescriptionCalendarContainer">
+        <PrescriptionCalendar scheduleData={scheduleData} />
+      </div>
     </Page>
   );
 };

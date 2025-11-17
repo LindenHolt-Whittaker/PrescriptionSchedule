@@ -1,9 +1,52 @@
+@use "../styles/colors" as colors;
+@use "../styles/mixins" as mixins;
+
 .PrescriptionCalendar {
+  max-width: 60rem;
+
   li {
     margin-bottom: 2rem;
   }
 
-  &__pickupDay {
-    color: yellow;
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+  }
+
+  &__day {
+    @include mixins.flex-center;
+    flex-direction: column;
+    aspect-ratio: 1 / 1;
+    padding: 0.5rem;
+    min-height: 100px;
+    background: colors.$gray-light;
+    border: 2px solid colors.$gray-light;
+    border-radius: 100%;
+
+    &--pickup {
+      background: colors.$gray-lightest;
+      border-color: colors.$blue;
+    }
+  }
+
+  &__dayNumber {
+    font-size: 0.9rem;
+    font-weight: bold;
+    
+    margin-bottom: 0.5rem;
+  }
+
+  &__dosage {
+    font-size: 1.1rem;
+    color: colors.$text-secondary;
+  }
+
+  &__pickupText {
+    color: colors.$text-highlight;
+
+    &--empty {
+      visibility: hidden;
+    }
   }
 }

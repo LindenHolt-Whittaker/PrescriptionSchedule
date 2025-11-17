@@ -1,5 +1,4 @@
 import { type PrescriptionData } from "../types/prescriptionData";
-import { formatDate } from "../utils/date";
 import { generateSchedule } from "../utils/prescriptionSchedule";
 import "./PrescriptionCalendar.scss";
 
@@ -12,24 +11,36 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
 
   return (
     <div className="PrescriptionCalendar">
-      <h2>14-Day Prescription Schedule</h2>
-      <ul>
-        {schedule.map((day, index) => (
-          <li key={day.date.toISOString()}>
-            <div>
-              <span>Day {index + 1}:</span> {formatDate(day.date)}
+      <h2>Prescription Schedule</h2>
+      <div className="PrescriptionCalendar__grid">
+        {schedule.map((day) => (
+          <div
+            key={day.date.toISOString()}
+            className={`PrescriptionCalendar__day ${
+              day.isPickupDay ? "PrescriptionCalendar__day--pickup" : ""
+            }`}
+          >
+            <div className="PrescriptionCalendar__dayNumber">
+              {day.date.toLocaleDateString("en-GB", {
+                weekday: "narrow",
+                year: "2-digit",
+                month: "2-digit",
+                day: "numeric",
+              })}
             </div>
-            <div>
-              <span>Dosage: {day.dosage}mg</span>
-              {day.isPickupDay && (
-                <div className="PrescriptionCalendar__pickupDay">
-                  Pickup Day
-                </div>
-              )}
+            <div className="PrescriptionCalendar__dosage">{day.dosage}mg</div>
+            <div
+              className={
+                day.isPickupDay
+                  ? "PrescriptionCalendar__pickupText"
+                  : "PrescriptionCalendar__pickupText--empty"
+              }
+            >
+              Pickup
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,11 @@
+@use "../../styles/mixins" as mixins;
+
 .Schedule {
   .DataField {
     margin-bottom: 2rem;
+  }
+
+  .PrescriptionCalendarContainer {
+    @include mixins.flex-center;
   }
 }

@@ -1,4 +1,4 @@
-export const formatDate = (date: Date): string => {
+export const formatLongDate = (date: Date): string => {
   return date.toLocaleDateString("en-GB", {
     weekday: "long",
     year: "numeric",
