@@ -1,5 +1,5 @@
-import { type PrescriptionData } from "../types/prescriptionData";
-import { generateSchedule } from "../utils/prescriptionSchedule";
+import { type PrescriptionData } from "../../types/prescriptionData";
+import { generateSchedule } from "../../utils/prescriptionSchedule";
 import "./PrescriptionCalendar.scss";
 
 interface PrescriptionCalendarProps {
@@ -12,6 +12,25 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
   return (
     <div className="PrescriptionCalendar">
       <div className="PrescriptionCalendar__grid">
+        <div className="PrescriptionCalendar__header">Mon</div>
+        <div className="PrescriptionCalendar__header">Tue</div>
+        <div className="PrescriptionCalendar__header">Wed</div>
+        <div className="PrescriptionCalendar__header">Thu</div>
+        <div className="PrescriptionCalendar__header">Fri</div>
+        <div className="PrescriptionCalendar__header PrescriptionCalendar__header--weekend">Sat</div>
+        <div className="PrescriptionCalendar__header PrescriptionCalendar__header--weekend">Sun</div>
+
+        {/* Add empty divs for offset */}
+        {schedule &&
+          Array.from({ length: (schedule[0].date.getDay() + 6) % 7 }).map(
+            (_, i) => (
+              <div
+                key={`offset-${i}`}
+                className="PrescriptionCalendar__day--empty"
+              />
+            )
+          )}
+
         {schedule.map((day) => (
           <div
             key={day.date.toISOString()}
@@ -21,7 +40,6 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
           >
             <div className="PrescriptionCalendar__dayNumber">
               {day.date.toLocaleDateString("en-GB", {
-                weekday: "narrow",
                 year: "2-digit",
                 month: "2-digit",
                 day: "numeric",

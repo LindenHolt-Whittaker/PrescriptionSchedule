@@ -1,10 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import Page from "../../components/Page";
-import PrescriptionCalendar from "../../components/PrescriptionCalendar";
 import { decodePrescriptionKey } from "../../utils/scheduleKey";
 import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import { type PrescriptionData } from "../../types/prescriptionData";
+import PrescriptionCalendar from "./PrescriptionCalendar";
 import ScheduleDataFields from "./ScheduleDataFields";
 import "./Schedule.scss";
 
