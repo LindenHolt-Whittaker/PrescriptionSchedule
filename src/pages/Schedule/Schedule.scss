@@ -1,14 +1,6 @@
 @use "../../styles/mixins" as mixins;
 
 .Schedule {
-  &__dataFieldGroup {
-    text-align: left;
-  }
-
-  &__dataField {
-    margin-bottom: 1rem;
-  }
-
   .PrescriptionCalendarContainer {
     @include mixins.flex-center;
   }
