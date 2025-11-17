@@ -15,7 +15,6 @@ const Page = ({ title, className, children }: PageProps) => {
       </div>
       <div className="Page__title">{title}</div>
       <div className="Page__content">{children}</div>
-      <div className="Page__footer">Footer</div>
     </div>
   );
 };

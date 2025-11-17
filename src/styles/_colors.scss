@@ -4,6 +4,9 @@ $blue-dark: #0056b3;
 $blue-light: #458cd8;
 $blue-lightest: #f0f8ff;
 
+// Alerts
+$red: #cc170a;
+
 // Neutrals
 $white: #ffffff;
 $gray-lightest: #f8f9fa;
@@ -22,6 +25,7 @@ $text-header: $blue;
 $text-primary: $gray-darkest;
 $text-secondary: $gray-darker;
 $text-highlight: $blue;
+$text-error: $red;
 
 // Backgrounds
 $bg-white: $white;

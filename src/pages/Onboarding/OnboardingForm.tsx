@@ -1,9 +1,14 @@
-import { useForm, Controller, type FieldError } from "react-hook-form";
+import {
+  useForm,
+  Controller,
+  type FieldError as FieldErrorType,
+} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Page from "../../components/Page";
+import FieldError from "../../components/FieldError";
 import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
 import { encodePrescriptionData } from "../../utils/scheduleKey";
 import { VALIDATION_RULES } from "../../validators/prescription";
@@ -32,20 +37,23 @@ const OnboardingForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: PrescriptionData) => {
-  try {
-    const key = encodePrescriptionData(data);
-    navigate(`/schedule?k=${key}`);
-  } catch (error) {
-    console.error("Failed to encode prescription data:", error);
-  }
-};
+    try {
+      const key = encodePrescriptionData(data);
+      navigate(`/schedule?k=${key}`);
+    } catch (error) {
+      console.error("Failed to encode prescription data:", error);
+    }
+  };
 
   const prescriptionType = watch("prescriptionType");
   const isDosageChanging =
     prescriptionType === "increasing" || prescriptionType === "reducing";
 
   return (
-    <Page title="Please provide your prescription information" className="OnboardingForm">
+    <Page
+      title="Please provide your prescription information"
+      className="OnboardingForm"
+    >
       <form className="OnboardingForm__form" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="initialDate">
           When is this prescription to be scheduled for?
@@ -62,6 +70,8 @@ const OnboardingForm = () => {
             />
           )}
         />
+        {/* This FieldError never showing error, due to initial date provided, this here just for spacing */}
+        <FieldError />
 
         <fieldset className="OnboardingForm__form__checkboxGroup">
           <legend>
@@ -78,7 +88,9 @@ const OnboardingForm = () => {
                     ).filter(Boolean).length;
                     return (
                       count >= VALIDATION_RULES.availableDays.min ||
-                      `Please select at least ${VALIDATION_RULES.availableDays.min} day${VALIDATION_RULES.availableDays.min > 1 ? "s" : ""}`
+                      `Please select at least ${
+                        VALIDATION_RULES.availableDays.min
+                      } day${VALIDATION_RULES.availableDays.min > 1 ? "s" : ""}`
                     );
                   },
                   onChange: () => {
@@ -92,17 +104,15 @@ const OnboardingForm = () => {
             </label>
           ))}
 
-          {Object.values(errors.availableDays || {}).some((error) => error) && (
-            <span className="error">
-              {
-                (
-                  Object.values(errors.availableDays || {}).find(
-                    (error) => error
-                  ) as FieldError
-                )?.message
-              }
-            </span>
-          )}
+          <FieldError>
+            {
+              (
+                Object.values(errors.availableDays || {}).find(
+                  (error) => error
+                ) as FieldErrorType | undefined
+              )?.message
+            }
+          </FieldError>
         </fieldset>
 
         <label htmlFor="prescriptionType">
@@ -119,9 +129,9 @@ const OnboardingForm = () => {
           <option value="reducing">Reducing</option>
           <option value="increasing">Increasing</option>
         </select>
-        {errors.prescriptionType && (
-          <span className="error">{errors.prescriptionType.message}</span>
-        )}
+        <FieldError>
+          {errors.prescriptionType && errors.prescriptionType.message}
+        </FieldError>
 
         <label htmlFor="dosage">
           What is the {isDosageChanging ? "initial dosage" : "dosage"}? (mg)
@@ -141,9 +151,7 @@ const OnboardingForm = () => {
             required: "Please provide dosage amount",
           })}
         />
-        {errors.dosage && (
-          <span className="error">{errors.dosage.message}</span>
-        )}
+        <FieldError>{errors.dosage && errors.dosage.message}</FieldError>
 
         {isDosageChanging && (
           <>
@@ -169,9 +177,9 @@ const OnboardingForm = () => {
                 },
               })}
             />
-            {errors.changeAmount && (
-              <span className="error">{errors.changeAmount.message}</span>
-            )}
+            <FieldError>
+              {errors.changeAmount && errors.changeAmount.message}
+            </FieldError>
 
             <label htmlFor="changeFrequency">
               How frequently is the prescription{" "}
@@ -195,9 +203,9 @@ const OnboardingForm = () => {
                 },
               })}
             />
-            {errors.changeFrequency && (
-              <span className="error">{errors.changeFrequency.message}</span>
-            )}
+            <FieldError>
+              {errors.changeFrequency && errors.changeFrequency.message}
+            </FieldError>
           </>
         )}
 

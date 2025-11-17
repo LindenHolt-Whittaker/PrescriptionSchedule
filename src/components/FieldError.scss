@@ -1,0 +1,11 @@
+@use "../styles/colors" as colors;
+
+.FieldError {
+  color: colors.$text-error;
+  font-size: 0.8rem;
+  font-style: italic;
+
+  &__hidden {
+    visibility: hidden;
+  }
+}
