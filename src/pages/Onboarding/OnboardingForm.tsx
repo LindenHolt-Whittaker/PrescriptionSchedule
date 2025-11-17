@@ -43,7 +43,7 @@ const OnboardingForm = () => {
     prescriptionType === "increasing" || prescriptionType === "reducing";
 
   return (
-    <Page title="Onboarding" className="OnboardingForm">
+    <Page title="Prescription information" className="OnboardingForm">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="initialDate">
           When is this prescription to be scheduled for?

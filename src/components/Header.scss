@@ -1,0 +1,66 @@
+@use "../styles/colors" as colors;
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4rem;
+
+  background-color: colors.$bg-light;
+
+  &__linkGroup {
+    display: flex;
+  }
+
+  &__link {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: colors.$text-highlight;
+    text-decoration: none;
+
+    border: 0 1px 0 1px solid colors.$gray-lightest;
+    padding: 0.5rem 1rem;
+
+    &:not(:first-child) {
+      border-left: none;
+    }
+
+    &:hover {
+      background-color: colors.$gray-lighter;
+    }
+  }
+
+  &__scheduleKeyInput {
+    display: flex;
+
+    input[type="text"] {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid colors.$gray;
+      border-radius: 0.5rem;
+    }
+
+    button {
+      visibility: hidden;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0 0.3rem 0.2rem;
+      font-size: 1.6rem;
+
+      border: 1px solid colors.$gray;
+      border-radius: 0 0.5rem 0.5rem 0;
+      border-left: none;
+    }
+
+    &--hasInput {
+      input[type="text"] {
+        border-radius: 0.5rem 0 0 0.5rem;
+      }
+
+      button {
+        visibility: visible;
+      }
+    }
+  }
+}

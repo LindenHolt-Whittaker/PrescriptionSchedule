@@ -5,20 +5,22 @@
   flex-direction: column;
   min-height: 100vh;
 
-  &__header,
-  &__content,
-  &__footer {
-    padding: 2rem;
-  }
-
   &__header {
     position: sticky;
     top: 0;
     z-index: 10;
-    font-size: 4rem;
+  }
 
+  &__title {
+    font-size: 2rem;
+    text-align: left;
     color: colors.$text-header;
-    background-color: colors.$bg-light;
+    padding: 0 5rem;
+  }
+
+  &__content,
+  &__footer {
+    padding: 2rem;
   }
 
   &__content {
