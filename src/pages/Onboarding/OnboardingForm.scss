@@ -19,7 +19,7 @@
       padding: 0;
 
       &:not(:first-child) {
-        margin-top: 0.75rem;
+        margin-top: 1rem;
 
         &.checkbox-day {
           margin: 0;
@@ -40,8 +40,9 @@
       border-radius: 0.5rem;
       font-size: 1rem;
       transition: all 0.2s ease;
-      background-color: white;
-
+      background-color: colors.$bg-white;
+      color: colors.$text-primary;
+      
       &:focus {
         outline: none;
         border-color: colors.$blue;
@@ -70,31 +71,6 @@
       cursor: pointer;
       width: 1.2rem;
       height: 1.2rem;
-    }
-
-    button[type="submit"] {
-      background-color: colors.$blue;
-      color: colors.$white;
-      border: none;
-      border-radius: 0.5rem;
-      margin-top: 1rem;
-      padding: 1rem 2rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover,
-      &:focus {
-        background-color: colors.$blue-dark;
-        transform: translateY(-0.1rem);
-        box-shadow: 0 0.25rem 0.25rem colors.$gray-light;
-      }
-
-      &:active {
-        transform: translateY(0);
-        background-color: colors.$blue-light;
-      }
     }
   }
 }

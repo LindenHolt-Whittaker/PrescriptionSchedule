@@ -21,11 +21,13 @@
   &__link {
     font-size: 1.25rem;
     font-weight: 600;
-    color: colors.$text-highlight;
+    color: colors.$blue-dark;
     text-decoration: none;
 
     border: 0 1px 0 1px solid colors.$gray-lightest;
     padding: 0.5rem 1rem;
+
+    transition: all 0.2s ease;
 
     &:not(:first-child) {
       border-left: none;

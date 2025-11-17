@@ -7,16 +7,19 @@
   padding: 0 2rem;
   border: 1px solid colors.$gray-lighter;
   border-radius: 0.5rem;
+  box-shadow: 0 1rem 2rem 0 colors.$gray-light;
 
   cursor: default;
 
   &__month {
-    color: colors.$gray-darker;
+    color: colors.$gray-dark;
     margin-bottom: 2rem;
 
     h2 {
-      margin-bottom: 1rem;
       font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 2rem;
+      margin-bottom: 0.5rem;
     }
   }
 
@@ -47,7 +50,7 @@
     @include mixins.flex-center;
     flex-direction: column;
     aspect-ratio: 1 / 1;
-    padding: 0.5rem;
+    padding: 0.25rem;
     line-height: 1.2rem;
 
     background: colors.$gray-lighter;
@@ -81,11 +84,14 @@
   }
 
   &__dosage {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     color: colors.$gray;
 
+    &--mg {
+      font-size: 0.5rem;
+    }
+
     &--pickup {
-      font-weight: 600;
       color: colors.$text-secondary;
     }
   }

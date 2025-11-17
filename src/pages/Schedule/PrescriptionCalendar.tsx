@@ -69,7 +69,7 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                       : ""
                   }`}
                 >
-                  {day.dosage}mg
+                  {day.dosage}<span className="PrescriptionCalendar__dosage--mg">mg</span>
                 </div>
               </div>
             ))}

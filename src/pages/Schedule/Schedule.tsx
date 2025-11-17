@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 import Page from "../../components/Page";
+import Button from "../../components/Button";
 import { decodePrescriptionKey } from "../../utils/scheduleKey";
 import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import { type PrescriptionData } from "../../types/prescriptionData";
@@ -9,13 +11,15 @@ import ScheduleDataFields from "./ScheduleDataFields";
 import "./Schedule.scss";
 
 const Schedule = () => {
+  const [copySuccess, setCopySuccess] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
   let scheduleData: PrescriptionData | null = null;
+  let key: string = "";
 
   try {
-    const key = searchParams.get("k") ?? "";
+    key = searchParams.get("k") ?? "";
     const data = decodePrescriptionKey(key);
     scheduleData = validatePrescriptionData(data);
   } catch (error) {
@@ -26,6 +30,16 @@ const Schedule = () => {
     return <Navigate to="/invalidSchedule" replace />;
   }
 
+  const handleCopyKey = async () => {
+    await navigator.clipboard.writeText(key);
+    setCopySuccess(true);
+
+    // Reset the "copied" state after 2 seconds
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 2000);
+  };
+
   return (
     <Page title="Your prescription schedule" className="Schedule">
       <div className="PrescriptionCalendarContainer">
@@ -33,6 +47,16 @@ const Schedule = () => {
       </div>
 
       <ScheduleDataFields scheduleData={scheduleData} />
+
+      <div className="Schedule__scheduleKey">
+        <div>
+          <span className="Schedule__scheduleKey__hash">#</span>
+          <span className="Schedule__scheduleKey__key">{key}</span>
+        </div>
+        <Button onClick={handleCopyKey} width={10} isSmall>
+          {copySuccess ? "✓ Copied!" : "Copy Schedule Key"}
+        </Button>
+      </div>
     </Page>
   );
 };

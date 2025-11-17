@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import Page from "../../components/Page";
 import FieldError from "../../components/FieldError";
+import Button from "../../components/Button";
 import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
 import { encodePrescriptionData } from "../../utils/scheduleKey";
 import { VALIDATION_RULES } from "../../validators/prescription";
@@ -209,7 +210,7 @@ const OnboardingForm = () => {
           </>
         )}
 
-        <button type="submit">Submit Onboarding</button>
+        <Button type="submit">Submit Onboarding</Button>
       </form>
     </Page>
   );
