@@ -62,7 +62,13 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                 <div className="PrescriptionCalendar__dayNumber">
                   {day.date.getDate()}
                 </div>
-                <div className="PrescriptionCalendar__dosage">
+                <div
+                  className={`PrescriptionCalendar__dosage ${
+                    day.isPickupDay
+                      ? "PrescriptionCalendar__dosage--pickup"
+                      : ""
+                  }`}
+                >
                   {day.dosage}mg
                 </div>
               </div>

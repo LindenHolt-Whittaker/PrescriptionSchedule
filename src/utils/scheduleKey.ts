@@ -75,13 +75,13 @@ function decodeBase62(str: string): bigint {
 function encodeWeekdays(days: AvailableDays): number {
   // Order: sunday=bit0, monday=bit1, ..., saturday=bit6
   const order: (keyof AvailableDays)[] = [
-    "sunday",
     "monday",
     "tuesday",
     "wednesday",
     "thursday",
     "friday",
     "saturday",
+    "sunday",
   ];
 
   let mask = 0;
@@ -94,13 +94,13 @@ function encodeWeekdays(days: AvailableDays): number {
 
 function decodeWeekdays(mask: number): AvailableDays {
   return {
-    sunday: !!(mask & (1 << 0)),
-    monday: !!(mask & (1 << 1)),
-    tuesday: !!(mask & (1 << 2)),
-    wednesday: !!(mask & (1 << 3)),
-    thursday: !!(mask & (1 << 4)),
-    friday: !!(mask & (1 << 5)),
-    saturday: !!(mask & (1 << 6)),
+    monday: !!(mask & (1 << 0)),
+    tuesday: !!(mask & (1 << 1)),
+    wednesday: !!(mask & (1 << 2)),
+    thursday: !!(mask & (1 << 3)),
+    friday: !!(mask & (1 << 4)),
+    saturday: !!(mask & (1 << 5)),
+    sunday: !!(mask & (1 << 6)),
   };
 }
 

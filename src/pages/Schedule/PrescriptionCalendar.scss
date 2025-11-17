@@ -4,10 +4,16 @@
 .PrescriptionCalendar {
   max-width: 60rem;
 
+  padding: 0 2rem;
+  border: 1px solid colors.$gray-lighter;
+  border-radius: 0.5rem;
+
+  cursor: default;
+
   &__month {
-    color: colors.$gray;
+    color: colors.$gray-darker;
     margin-bottom: 2rem;
-    
+
     h2 {
       margin-bottom: 1rem;
       font-size: 1.5rem;
@@ -19,51 +25,68 @@
     grid-template-columns: repeat(7, 1fr);
     gap: 0.5rem;
   }
-  
+
   &__header {
     color: colors.$gray-darker;
     font-weight: bold;
-    
+
     padding: 0.5rem;
     margin-bottom: 0.5rem;
 
     border-radius: 0.5rem;
-    background: colors.$gray-lightest;
+    background: colors.$gray-lighter;
 
     &--weekend {
-      background: colors.$gray-lighter;
+      background: colors.$gray-light;
     }
   }
 
   &__day {
     color: colors.$text-primary;
-    
+
     @include mixins.flex-center;
     flex-direction: column;
     aspect-ratio: 1 / 1;
     padding: 0.5rem;
+    line-height: 1.2rem;
 
-    background: colors.$gray-light;
-    border: 2px solid colors.$gray-light;
+    background: colors.$gray-lighter;
+    border: 2px solid colors.$gray-lighter;
     border-radius: 100%;
 
-    &--pickup {
-      background: colors.$gray-lightest;
-      border-color: colors.$blue;
+    &:hover {
+      background-color: colors.$gray-light;
+      border-color: colors.$gray-light;
     }
-    
+
+    &--pickup {
+      background: colors.$white;
+      border-color: colors.$blue;
+
+      &:hover {
+        background-color: colors.$blue-lightest;
+        border-color: colors.$blue;
+        box-shadow: 0 0 0.25rem 0 colors.$blue-light;
+      }
+    }
+
     &--empty {
       visibility: hidden;
     }
   }
 
   &__dayNumber {
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    padding-top: 0.5rem;
   }
 
   &__dosage {
-    font-size: 0.9rem;
-    color: colors.$text-secondary;
+    font-size: 0.8rem;
+    color: colors.$gray;
+
+    &--pickup {
+      font-weight: 600;
+      color: colors.$text-secondary;
+    }
   }
 }
