@@ -3,52 +3,59 @@ import { formatLongDate } from "../../utils/date";
 import { formatSelectedDays } from "../../utils/days";
 import { type PrescriptionData } from "../../types/prescriptionData";
 
-const ScheduleDataFields = ({scheduleData}: {scheduleData: PrescriptionData}) => {
+const ScheduleDataFields = ({
+  scheduleData,
+}: {
+  scheduleData: PrescriptionData;
+}) => {
+  const isStabilisingType = scheduleData.prescriptionType === "stabilisation";
+  const isIncreasingType = scheduleData.prescriptionType === "increasing";
+
   const dataFields = [
-    { label: "Initial date", field: formatLongDate(scheduleData.initialDate) },
+    {
+      label: "Prescription pickup schedule date",
+      field: formatLongDate(scheduleData.initialDate),
+      column: 0,
+    },
     {
       label: "Available days",
       field: formatSelectedDays(scheduleData.availableDays),
+      column: 0,
     },
     {
       label: "Prescription type",
       field:
         scheduleData.prescriptionType.charAt(0).toUpperCase() +
         scheduleData.prescriptionType.slice(1),
+      column: isStabilisingType ? 1 : 0,
     },
     {
-      label:
-        scheduleData.prescriptionType !== "stabilisation"
-          ? "Initial dosage"
-          : "Dosage",
+      label: isStabilisingType ? "Dosage" : "Initial dosage",
       field: `${scheduleData.dosage}mg`,
+      column: 1,
     },
   ];
 
-  if (scheduleData.prescriptionType !== "stabilisation") {
-    dataFields.push(...[
-      {
-        label: `Dosage ${
-          scheduleData.prescriptionType === "increasing"
-            ? "increase"
-            : "reduction"
-        } amount`,
-        field: `${scheduleData.changeAmount}mg`,
-      },
-      {
-        label: `Dosage ${
-          scheduleData.prescriptionType === "increasing"
-            ? "increase"
-            : "reduction"
-        } frequency`,
-        field: `Every ${scheduleData.changeFrequency} days`,
-      },
-    ]);
+  if (!isStabilisingType) {
+    dataFields.push(
+      ...[
+        {
+          label: `Dosage ${isIncreasingType ? "increase" : "reduction"} amount`,
+          field: `${scheduleData.changeAmount}mg`,
+          column: 1,
+        },
+        {
+          label: `Dosage ${
+            isIncreasingType ? "increase" : "reduction"
+          } frequency`,
+          field: `Every ${scheduleData.changeFrequency} days`,
+          column: 1,
+        },
+      ]
+    );
   }
 
-  return (
-    <DataFields fields={dataFields} />
-  );
+  return <DataFields fields={dataFields} />;
 };
 
 export default ScheduleDataFields;

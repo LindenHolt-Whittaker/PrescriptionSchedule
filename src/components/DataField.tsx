@@ -10,7 +10,7 @@ const DataField = ({
   field,
 }: DataFieldItem) => (
   <div className="DataField">
-    <div className="DataField__label">{label}</div>
+    <div className="DataField__label">{label}:</div>
     <div className="DataField__field">{field}</div>
   </div>
 );
