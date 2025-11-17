@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import Page from "../../components/Page";
 import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
+import { encodePrescriptionData } from "../../utils/scheduleKey";
 import { VALIDATION_RULES } from "../../validators/prescription";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import "./OnboardingForm.scss";
@@ -31,12 +32,13 @@ const OnboardingForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: PrescriptionData) => {
-    const params = new URLSearchParams({
-      data: JSON.stringify(data),
-    });
-
-    navigate(`/schedule?${params.toString()}`);
-  };
+  try {
+    const key = encodePrescriptionData(data);
+    navigate(`/schedule?k=${key}`);
+  } catch (error) {
+    console.error("Failed to encode prescription data:", error);
+  }
+};
 
   const prescriptionType = watch("prescriptionType");
   const isDosageChanging =

@@ -2,9 +2,10 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import Page from "../../components/Page";
 import PrescriptionCalendar from "../../components/PrescriptionCalendar";
+import { decodePrescriptionKey } from "../../utils/scheduleKey";
+import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import { formatLongDate } from "../../utils/date";
 import { formatSelectedDays } from "../../utils/days";
-import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import "./Schedule.scss";
 
@@ -19,14 +20,15 @@ const Schedule = () => {
   let scheduleData: PrescriptionData | null = null;
 
   try {
-    const data = JSON.parse(searchParams.get("data") || "{}");
+    const key = searchParams.get("k") ?? "";
+    const data = decodePrescriptionKey(key);
     scheduleData = validatePrescriptionData(data);
   } catch (error) {
     console.error("Invalid schedule data:", error);
   }
 
   if (!scheduleData) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/invalidSchedule" replace />;
   }
 
   return (

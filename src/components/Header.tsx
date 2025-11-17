@@ -12,14 +12,7 @@ const Header = () => {
   // TODO: Actually implement. Currently mock implementation
   // for serialized schedule key in place of URL params, and better error page
   const onScheduleKeySubmit = () => {
-    const isKeyValid = scheduleKey.length === 10;
-
-    if (!isKeyValid) {
-      navigate("/invalidSchedule");
-      return;
-    }
-
-    navigate(`/schedule?${scheduleKey}`);
+    navigate(`/schedule?k=${scheduleKey}`);
   };
 
   return (
