@@ -1,14 +1,24 @@
+@use "../styles/breakpoints" as breakpoints;
 @use "../styles/colors" as colors;
 @use "../styles/mixins" as mixins;
 
 .ErrorPage {
-  &__container { 
+  &__container {
     @include mixins.flex-center;
     flex-direction: column;
     text-align: center;
-    
-    padding: 3rem 2rem;
+
     min-height: 60vh;
+
+    padding: 5rem 0;
+
+    @include breakpoints.respond(sm) {
+      padding: 4rem 0.5rem;
+    }
+
+    @include breakpoints.respond(md) {
+      padding: 3rem 2rem;
+    }
   }
 
   &__graphic {

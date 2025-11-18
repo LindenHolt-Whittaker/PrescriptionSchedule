@@ -1,15 +1,37 @@
+@use "../../styles/breakpoints" as breakpoints;
 @use "../../styles/colors" as colors;
 
 .OnboardingForm {
+  h1 {
+    font-size: 1.2rem;
+    text-align: left;
+
+    @include breakpoints.respond(sm) {
+      padding: 0 2.5rem;
+    }
+
+    @include breakpoints.respond(md) {
+      padding: 0 5rem;
+    }
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
-    
+
     max-width: 48rem;
     margin: 0 auto;
-    padding: 0 2rem;
-
     text-align: left;
+
+    padding: 0;
+
+    @include breakpoints.respond(sm) {
+      padding: 0 1rem;
+    }
+
+    @include breakpoints.respond(md) {
+      padding: 0 2rem;
+    }
 
     label,
     legend,
@@ -18,17 +40,31 @@
       margin-bottom: 0.25rem;
       padding: 0;
 
-      &:not(:first-child) {
-        margin-top: 1rem;
+      font-size: 1.1rem;
 
-        &.checkbox-day {
-          margin: 0;
+      &:not(:first-child) {
+        margin: 0.125rem 0 0;
+
+        @include breakpoints.respond(sm) {
+          margin: 0.25rem 0 0;
+        }
+
+        @include breakpoints.respond(md) {
+          margin: 0.5rem 0 0;
         }
       }
     }
 
     fieldset {
       border: none;
+    }
+
+    .checkbox-day,
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    select {
+      font-size: 1rem;
     }
 
     input[type="text"],
@@ -38,11 +74,10 @@
       padding: 0.75rem;
       border: 1px solid colors.$gray-light;
       border-radius: 0.5rem;
-      font-size: 1rem;
       transition: all 0.2s ease;
       background-color: colors.$bg-white;
       color: colors.$text-primary;
-      
+
       &:focus {
         outline: none;
         border-color: colors.$blue;
@@ -59,6 +94,7 @@
 
       .checkbox-day {
         display: flex;
+        align-items: center;
         cursor: pointer;
         gap: 0.5rem;
         padding-left: 0.125rem;
@@ -69,8 +105,19 @@
     input[type="checkbox"] {
       margin: 0;
       cursor: pointer;
-      width: 1.2rem;
-      height: 1.2rem;
+
+      width: 1.25rem;
+      height: 1.25rem;
+
+      @include breakpoints.respond(sm) {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+
+      @include breakpoints.respond(md) {
+        width: 1.75rem;
+        height: 1.75rem;
+      }
     }
   }
 }

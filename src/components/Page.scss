@@ -1,3 +1,4 @@
+@use "../styles/breakpoints" as breakpoints;
 @use "../styles/colors" as colors;
 
 .Page {
@@ -12,16 +13,38 @@
   }
 
   &__title h1 {
-    font-size: 2rem;
     color: colors.$text-header;
-    margin: 2rem 0 0;
-    padding: 0 5rem;
+
+    font-size: 1.2rem;
+    margin: 1rem 0 0;
+    padding: 0 2rem;
+
+    @include breakpoints.respond(sm) {
+      font-size: 1.5rem;
+      margin: 1.5rem 0 0;
+      padding: 0 3.5rem;
+    }
+
+    @include breakpoints.respond(md) {
+      font-size: 2rem;
+      margin: 2rem 0 0;
+      padding: 0 5rem;
+    }
   }
 
   &__content {
-    padding: 2rem 5rem;
     color: colors.$text-primary;
     background-color: colors.$bg-white;
     flex-grow: 1;
+
+    padding: 1rem 2rem;
+
+    @include breakpoints.respond(sm) {
+      padding: 1.5rem 3.5rem;
+    }
+
+    @include breakpoints.respond(md) {
+      padding: 2rem 5rem;
+    }
   }
 }

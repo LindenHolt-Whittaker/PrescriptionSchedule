@@ -1,11 +1,17 @@
+@use "../../styles/breakpoints" as breakpoints;
 @use "../../styles/colors" as colors;
 @use "../../styles/mixins" as mixins;
 
 .Home {
   &__title {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
     color: colors.$text-header;
+    font-size: 1.5rem;
+
+    @include breakpoints.respond(md) {
+      font-size: 2.5rem;
+    }
+
+    margin-bottom: 1rem;
   }
 
   &__description {
@@ -16,16 +22,25 @@
   }
 
   &__cta {
-    font-size: 1.2rem;
-    padding: 1rem 3rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+
+    @include breakpoints.respond(sm) {
+      padding: 0.75rem 1.5rem;
+    }
+
+    @include breakpoints.respond(md) {
+      font-size: 1.2rem;
+      padding: 1rem 3rem;
+    }
   }
 
   &__divider {
     margin: 3rem 0;
     position: relative;
-    
+
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 50%;
       left: 0;
@@ -95,7 +110,7 @@
     color: colors.$gray;
     margin-right: 0.5rem;
     font-weight: 600;
-    
+
     @include mixins.no-select;
   }
 }

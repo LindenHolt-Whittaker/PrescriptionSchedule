@@ -1,3 +1,4 @@
+@use "../styles/breakpoints" as breakpoints;
 @use "../styles/colors" as colors;
 @use "../styles/mixins" as mixins;
 
@@ -7,13 +8,27 @@
   border: none;
   outline: none;
   border-radius: 0.5rem;
-  margin-top: 1rem;
-  padding: 1rem 2rem;
   font-weight: 600;
-  font-size: 1.1rem;
   line-height: 1.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
+
+  width: 100%;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+
+  @include breakpoints.respond(sm) {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+  }
+
+  @include breakpoints.respond(md) {
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
 
   &:hover:not(:disabled),
   &:focus {
