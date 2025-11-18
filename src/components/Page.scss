@@ -11,10 +11,10 @@
     z-index: 10;
   }
 
-  &__title {
+  &__title h1 {
     font-size: 2rem;
     color: colors.$text-header;
-    margin-top: 2rem;
+    margin: 2rem 0 0;
     padding: 0 5rem;
   }
 

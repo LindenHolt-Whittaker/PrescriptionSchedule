@@ -13,7 +13,7 @@ const Page = ({ title, className, children }: PageProps) => {
       <div className="Page__header">
         <Header />
       </div>
-      <div className="Page__title">{title}</div>
+      <div className="Page__title"><h1>{title}</h1></div>
       <div className="Page__content">{children}</div>
     </div>
   );

@@ -1,0 +1,37 @@
+@use "../styles/colors" as colors;
+@use "../styles/mixins" as mixins;
+
+.ErrorPage {
+  &__container { 
+    @include mixins.flex-center;
+    flex-direction: column;
+    text-align: center;
+    
+    padding: 3rem 2rem;
+    min-height: 60vh;
+  }
+
+  &__graphic {
+    font-size: 5rem;
+    color: colors.$text-header;
+  }
+
+  &__title h1 {
+    margin: 0 0 2rem 0;
+
+    font-size: 2.5rem;
+    line-height: 2rem;
+    color: colors.$text-header;
+  }
+
+  &__content {
+    text-align: center;
+    font-size: 1.1rem;
+    max-width: 30rem;
+    color: colors.$text-secondary;
+
+    .Button {
+      margin-top: 2rem;
+    }
+  }
+}

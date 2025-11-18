@@ -5,7 +5,7 @@
   &__title {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: colors.$text-primary;
+    color: colors.$text-header;
   }
 
   &__description {
@@ -47,6 +47,7 @@
     padding: 2rem 0;
 
     h2 {
+      color: colors.$text-header;
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
     }
