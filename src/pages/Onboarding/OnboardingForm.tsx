@@ -12,7 +12,10 @@ import FieldError from "../../components/FieldError";
 import Button from "../../components/Button";
 import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
 import { encodePrescriptionData } from "../../utils/scheduleKey";
-import { VALIDATION_RULES } from "../../validators/prescription";
+import {
+  VALIDATION_RULES,
+  isValidDosageTotal,
+} from "../../validators/prescription";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import "./OnboardingForm.scss";
 
@@ -123,6 +126,11 @@ const OnboardingForm = () => {
           id="prescriptionType"
           {...register("prescriptionType", {
             required: "Please select a prescription type",
+            onChange: () => {
+              if (isSubmitted) {
+                trigger("dosage");
+              }
+            },
           })}
         >
           <option value="">Select prescription type</option>
@@ -150,6 +158,16 @@ const OnboardingForm = () => {
               message: `Dosage cannot exceed ${VALIDATION_RULES.dosage.max}mg`,
             },
             required: "Please provide dosage amount",
+            validate: {
+              validTotal: (value, formValues) => {
+                return (
+                  isValidDosageTotal(
+                    formValues.prescriptionType,
+                    Number(value)
+                  ) || "This prescription will result in 0mg total dosage"
+                );
+              },
+            },
           })}
         />
         <FieldError>{errors.dosage && errors.dosage.message}</FieldError>

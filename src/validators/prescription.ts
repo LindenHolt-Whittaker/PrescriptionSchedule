@@ -39,3 +39,8 @@ export const isValidAvailableDays = (availableDays: AvailableDays): boolean => {
 export const isValidPrescriptionType = (type: string): type is "stabilisation" | "reducing" | "increasing" => {
   return type === "stabilisation" || type === "reducing" || type === "increasing";
 };
+
+// Validate that dosage has some amount above 0
+export const isValidDosageTotal = (prescriptionType: string, dosage: number): boolean => {
+  return prescriptionType === "increasing" ? true : dosage > 0;
+}; 

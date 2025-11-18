@@ -1,10 +1,11 @@
 import { type PrescriptionData } from "../types/prescriptionData";
-import { 
-  isValidDosage, 
-  isValidChangeAmount, 
+import {
+  isValidDosage,
+  isValidDosageTotal,
+  isValidChangeAmount,
   isValidChangeFrequency,
   isValidAvailableDays,
-  isValidPrescriptionType
+  isValidPrescriptionType,
 } from "../validators/prescription";
 
 export const validatePrescriptionData = (
@@ -29,8 +30,12 @@ export const validatePrescriptionData = (
 
     // Parsing numbers before validation
     const dosage = Number(parsed.dosage);
-    const changeAmount = parsed.changeAmount ? Number(parsed.changeAmount) : undefined;
-    const changeFrequency = parsed.changeFrequency ? Number(parsed.changeFrequency) : undefined;
+    const changeAmount = parsed.changeAmount
+      ? Number(parsed.changeAmount)
+      : undefined;
+    const changeFrequency = parsed.changeFrequency
+      ? Number(parsed.changeFrequency)
+      : undefined;
 
     if (!isValidDosage(dosage)) {
       return null;
@@ -41,16 +46,24 @@ export const validatePrescriptionData = (
     }
 
     // Validate conditional fields for increasing/reducing
-    const isDynamic = parsed.prescriptionType === "reducing" || parsed.prescriptionType === "increasing";
-    
-    if (isDynamic) {
+    const isStabilisingType = parsed.prescriptionType === "stabilisation";
+
+    if (!isStabilisingType) {
       if (!changeAmount || !changeFrequency) {
         return null;
       }
-      
-      if (!isValidChangeAmount(changeAmount) || !isValidChangeFrequency(changeFrequency)) {
+
+      if (
+        !isValidChangeAmount(changeAmount) ||
+        !isValidChangeFrequency(changeFrequency)
+      ) {
         return null;
       }
+    }
+
+    // Validate dosage total
+    if (!isValidDosageTotal(parsed.prescriptionType, dosage)) {
+      return null;
     }
 
     return {
