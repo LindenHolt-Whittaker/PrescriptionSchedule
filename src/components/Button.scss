@@ -1,9 +1,11 @@
 @use "../styles/colors" as colors;
+@use "../styles/mixins" as mixins;
 
 .Button {
   background-color: colors.$blue;
   color: colors.$white;
   border: none;
+  outline: none;
   border-radius: 0.5rem;
   margin-top: 1rem;
   padding: 1rem 2rem;
@@ -13,7 +15,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
 
-  &:hover,
+  &:hover:not(:disabled),
   &:focus {
     background-color: colors.$blue-dark;
     transform: translateY(-0.1rem);
@@ -23,6 +25,12 @@
   &:active {
     transform: translateY(0);
     background-color: colors.$blue-light;
+  }
+
+  &:disabled {
+    background-color: colors.$gray;
+    cursor: default;
+    @include mixins.no-select;
   }
 
   &--isSmall {

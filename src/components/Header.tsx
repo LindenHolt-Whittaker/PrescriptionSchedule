@@ -1,20 +1,12 @@
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useScheduleKeyNav } from "../hooks/useScheduleKeyNav";
 import "./Header.scss";
 
 const Header = () => {
-  const [scheduleKey, setScheduleKey] = useState<string>("");
-  const navigate = useNavigate();
   const location = useLocation();
+  const { scheduleKey, setScheduleKey, onKeySearch } = useScheduleKeyNav();
 
   const isHomePage = location.pathname === "/";
-
-  const onScheduleKeySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (scheduleKey.trim()) {
-      navigate(`/schedule?k=${scheduleKey}`);
-    }
-  };
 
   return (
     <div className="Header">
@@ -33,7 +25,7 @@ const Header = () => {
 
       {!isHomePage && (
         <form
-          onSubmit={onScheduleKeySubmit}
+          onSubmit={onKeySearch}
           className={`Header__scheduleKey ${
             scheduleKey ? "Header__scheduleKey--hasInput" : ""
           }`}
