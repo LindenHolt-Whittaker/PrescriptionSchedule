@@ -1,0 +1,142 @@
+@use "../../styles/colors" as colors;
+
+.PrescriptionCalendarMobile {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  &__item {
+    background: colors.$white;
+    border: 2px solid colors.$gray-lighter;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    overflow: hidden;
+
+    &--holiday {
+      background-color: colors.$gray-lighter;
+      border-color: colors.$gray-light;
+    }
+
+    &--pickup {
+      border-color: colors.$blue-dark;
+      background: colors.$blue-lightest;
+    }
+
+    &--expanded {
+      box-shadow: 0 0 1rem 0 colors.$gray-light;
+      border-color: colors.$gray-light;
+
+      &.PrescriptionCalendarMobile__item--holiday {
+        border-color: colors.$gray;
+      }
+
+      &.PrescriptionCalendarMobile__item--pickup {
+        border-color: colors.$blue;
+      }
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  &__dayNumber {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: colors.$text-primary;
+    margin-right: 1rem;
+  }
+
+  &__dayName {
+    font-size: 0.75rem;
+    color: colors.$text-secondary;
+  }
+
+  &__rightContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__bankHolidayText {
+    color: colors.$gray;
+    font-size: 0.7rem;
+    padding-top: 0.2rem;
+    margin-right: 1rem;
+  }
+
+  &__dosage {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: colors.$text-primary;
+    margin-right: 1rem;
+    font-family: monospace;
+
+    &--ml {
+      font-size: 0.9rem;
+      margin-left: 0.25rem;
+      color: colors.$text-secondary;
+    }
+  }
+
+  &__chevron {
+    font-size: 0.75rem;
+    color: colors.$text-secondary;
+    transition: transform 0.2s ease;
+  }
+
+  &__details {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1rem;
+    border-top: 1px solid transparent;
+    transition: all 0.2s;
+
+    &--expanded {
+      max-height: 500px;
+      padding: 0 1rem 1rem;
+      border-top-color: colors.$gray-lighter;
+
+      &.PrescriptionCalendarMobile__details--holiday {
+        border-top-color: colors.$gray-light;
+      }
+
+      &.PrescriptionCalendarMobile__details--pickup {
+        border-top-color: colors.$blue-lighter;
+      }
+    }
+  }
+
+  &__detail {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: colors.$text-primary;
+
+    &--ml {
+      font-size: 0.7rem;
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+
+    &--pickup {
+      background: colors.$blue-lighter;
+      color: colors.$blue;
+    }
+
+    &--holiday {
+      background: colors.$gray-light;
+      color: colors.$gray-dark;
+    }
+  }
+}
