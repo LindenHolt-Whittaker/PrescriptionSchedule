@@ -108,13 +108,31 @@
 
   &--loading {
     @include mixins.flex-center;
-    min-height: 25rem;
-    min-width: 30rem;
+    min-height: 22rem;
+    min-width: 28rem;
+    overflow: hidden;
+
+    background: linear-gradient(
+      0deg,
+      colors.$gray-lighter 0%,
+      colors.$white 50%,
+      colors.$gray-lighter 100%
+    );
+    background-size: 100% 200%;
+    animation: shimmer 1.5s ease-in-out infinite;
 
     &__text {
-      color: colors.$gray;
+      color: colors.$gray-dark;
       font-size: 1.5rem;
-      font-style: italic;
     }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0 200%;
+  }
+  100% {
+    background-position: 0 -200%;
   }
 }

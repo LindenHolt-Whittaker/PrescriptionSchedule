@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import { generateSchedule } from "../../utils/prescriptionSchedule";
 import { fetchUKBankHolidays } from "../../utils/bankHolidays";
@@ -14,16 +14,23 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchUKBankHolidays('england-and-wales')
+    fetchUKBankHolidays("england-and-wales")
       .then(setBankHolidays)
-      .finally(() => setIsLoading(false));
+      .finally(
+        () => setTimeout(() => {
+          setIsLoading(false);
+        // Half a second delay to load for UX purposes (prevents jitter on very fast load)
+        }, 500)
+      );
   }, []);
 
   // Wait for bank holidays to load before generating schedule
   if (isLoading) {
     return (
       <div className="PrescriptionCalendar PrescriptionCalendar--loading">
-        <p className='PrescriptionCalendar--loading__text'>Loading schedule...</p>
+        <p className="PrescriptionCalendar--loading__text">
+          Loading schedule...
+        </p>
       </div>
     );
   }
@@ -91,7 +98,8 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                       : ""
                   }`}
                 >
-                  {day.dosage}<span className="PrescriptionCalendar__dosage--mg">mg</span>
+                  {day.dosage}
+                  <span className="PrescriptionCalendar__dosage--mg">mg</span>
                 </div>
               </div>
             ))}
