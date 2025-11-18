@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { type PrescriptionData } from "../../types/prescriptionData";
 import { generateSchedule } from "../../utils/prescriptionSchedule";
 import { fetchUKBankHolidays } from "../../utils/bankHolidays";
@@ -12,19 +12,40 @@ interface PrescriptionCalendarProps {
 const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
   const [bankHolidays, setBankHolidays] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDay, setSelectedDay] = useState<ScheduleDay | null>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchUKBankHolidays("england-and-wales")
       .then(setBankHolidays)
-      .finally(
-        () => setTimeout(() => {
+      .finally(() =>
+        setTimeout(() => {
           setIsLoading(false);
-        // Half a second delay to load for UX purposes (prevents jitter on very fast load)
+          // Half a second delay to load for UX purposes (prevents jitter on very fast load)
         }, 500)
       );
   }, []);
 
-  // Wait for bank holidays to load before generating schedule
+  // Click outside to close popup
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        setSelectedDay(null);
+      }
+    };
+
+    if (selectedDay) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [selectedDay]);
+
   if (isLoading) {
     return (
       <div className="PrescriptionCalendar PrescriptionCalendar--loading">
@@ -37,7 +58,6 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
 
   const schedule = generateSchedule(scheduleData, bankHolidays);
 
-  // Group by month for multi-month display
   const scheduleByMonth = schedule.reduce((acc, day) => {
     const monthKey = day.date.toLocaleDateString("en-GB", {
       year: "numeric",
@@ -49,6 +69,10 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
     acc[monthKey].push(day);
     return acc;
   }, {} as Record<string, ScheduleDay[]>);
+
+  const handleDayClick = (day: ScheduleDay) => {
+    setSelectedDay(day);
+  };
 
   return (
     <div className="PrescriptionCalendar">
@@ -68,7 +92,6 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
               Sun
             </div>
 
-            {/* Add empty divs for offset */}
             {days[0] &&
               Array.from({ length: (days[0].date.getDay() + 6) % 7 }).map(
                 (_, i) => (
@@ -81,11 +104,15 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
 
             {days.map((day) => (
               <div
-                key={day.date.toISOString()}
+                onClick={() => handleDayClick(day)}
                 className={`PrescriptionCalendar__day ${
                   day.isPickupDay ? "PrescriptionCalendar__day--pickup" : ""
                 } ${
                   day.isBankHoliday ? "PrescriptionCalendar__day--holiday" : ""
+                } ${
+                  selectedDay?.date.toISOString() === day.date.toISOString()
+                    ? "PrescriptionCalendar__day--selected"
+                    : ""
                 }`}
               >
                 <div className="PrescriptionCalendar__dayNumber">
@@ -101,6 +128,35 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                   {day.dosage}
                   <span className="PrescriptionCalendar__dosage--mg">mg</span>
                 </div>
+
+                {selectedDay?.date.toISOString() === day.date.toISOString() && (
+                  <div ref={popupRef} className="PrescriptionCalendar__popup">
+                    <div className="PrescriptionCalendar__popup__chevron" />
+                    <div className="PrescriptionCalendar__popup__content">
+                      <div className="PrescriptionCalendar__popup__heading">
+                        {day.date.toLocaleDateString("en-GB", {
+                          weekday: "long",
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </div>
+                      <div className="PrescriptionCalendar__popup__detail">
+                        Dosage: {day.dosage}mg
+                      </div>
+                      {day.isPickupDay && (
+                        <div className="PrescriptionCalendar__popup__badge PrescriptionCalendar__popup__badge--pickup">
+                          ✓ Pickup Day
+                        </div>
+                      )}
+                      {day.isBankHoliday && (
+                        <div className="PrescriptionCalendar__popup__badge PrescriptionCalendar__popup__badge--holiday">
+                          ⚑ Bank Holiday
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
