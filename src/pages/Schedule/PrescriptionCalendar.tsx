@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { type PrescriptionData } from "../../types/prescriptionData";
 import { generateSchedule } from "../../utils/prescriptionSchedule";
+import { fetchUKBankHolidays } from "../../utils/bankHolidays";
 import { type ScheduleDay } from "../../types/scheduleData";
 import "./PrescriptionCalendar.scss";
 
@@ -8,7 +10,25 @@ interface PrescriptionCalendarProps {
 }
 
 const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
-  const schedule = generateSchedule(scheduleData);
+  const [bankHolidays, setBankHolidays] = useState<Set<string>>(new Set());
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchUKBankHolidays('england-and-wales')
+      .then(setBankHolidays)
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  // Wait for bank holidays to load before generating schedule
+  if (isLoading) {
+    return (
+      <div className="PrescriptionCalendar PrescriptionCalendar--loading">
+        <p className='PrescriptionCalendar--loading__text'>Loading schedule...</p>
+      </div>
+    );
+  }
+
+  const schedule = generateSchedule(scheduleData, bankHolidays);
 
   // Group by month for multi-month display
   const scheduleByMonth = schedule.reduce((acc, day) => {
@@ -57,6 +77,8 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                 key={day.date.toISOString()}
                 className={`PrescriptionCalendar__day ${
                   day.isPickupDay ? "PrescriptionCalendar__day--pickup" : ""
+                } ${
+                  day.isBankHoliday ? "PrescriptionCalendar__day--holiday" : ""
                 }`}
               >
                 <div className="PrescriptionCalendar__dayNumber">

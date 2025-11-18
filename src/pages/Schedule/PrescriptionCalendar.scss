@@ -53,7 +53,7 @@
     padding: 0.25rem;
     line-height: 1.2rem;
 
-    background: colors.$gray-lighter;
+    background-color: colors.$gray-lighter;
     border: 2px solid colors.$gray-lighter;
     border-radius: 100%;
 
@@ -62,8 +62,18 @@
       border-color: colors.$gray-light;
     }
 
+    &--holiday {
+      background-color: colors.$gray-lighter;
+      border: 2px solid colors.$gray-light;
+    
+      &:hover {
+        background-color: colors.$gray-light;
+        border-color: colors.$gray;
+      }
+    }
+
     &--pickup {
-      background: colors.$white;
+      background-color: colors.$white;
       border-color: colors.$blue;
 
       &:hover {
@@ -93,6 +103,18 @@
 
     &--pickup {
       color: colors.$text-secondary;
+    }
+  }
+
+  &--loading {
+    @include mixins.flex-center;
+    min-height: 25rem;
+    min-width: 30rem;
+
+    &__text {
+      color: colors.$gray;
+      font-size: 1.5rem;
+      font-style: italic;
     }
   }
 }

@@ -1,27 +1,29 @@
 import { type PrescriptionData } from "../types/prescriptionData";
 import { type ScheduleDay } from "../types/scheduleData";
 import { type DayName } from "../types/days";
+import { isBankHoliday } from "./bankHolidays";
 
 const findFirstPickupDate = (
   initialDate: Date,
-  availableDays: Record<DayName, boolean>
+  availableDays: Record<DayName, boolean>,
+  bankHolidays: Set<string>
 ): Date => {
   const currentDate = new Date(initialDate);
-  
+
   // Check up to 7 days ahead to find first available day
   for (let i = 0; i < 7; i++) {
     const checkDate = new Date(currentDate);
     checkDate.setDate(currentDate.getDate() + i);
-    
+
     const dayName = checkDate
       .toLocaleDateString("en-GB", { weekday: "long" })
       .toLowerCase() as DayName;
-    
-    if (availableDays[dayName]) {
+
+    if (availableDays[dayName] && !isBankHoliday(checkDate, bankHolidays)) {
       return checkDate;
     }
   }
-  
+
   // No previous pickup day exists (should never occur, because we check the whole week)
   console.error("No pickup date found.");
   return currentDate;
@@ -63,19 +65,21 @@ const findNextPickupIndex = (
       return i;
     }
   }
-  return null; // No more pickup days
+  // No more pickup days
+  return null;
 };
 
-// TODO: account for bank holidays using gov API 
 export const generateSchedule = (
-  scheduleData: PrescriptionData
+  scheduleData: PrescriptionData,
+  bankHolidays: Set<string>
 ): ScheduleDay[] => {
   const schedule: ScheduleDay[] = [];
-  
+
   // Find the first available pickup day
   const startDate = findFirstPickupDate(
     scheduleData.initialDate,
-    scheduleData.availableDays
+    scheduleData.availableDays,
+    bankHolidays
   );
 
   // Generate initial 2 week schedule with calculated dosages
@@ -86,13 +90,19 @@ export const generateSchedule = (
     const dayName = currentDate
       .toLocaleDateString("en-GB", { weekday: "long" })
       .toLowerCase() as DayName;
-    const isPickupDay = scheduleData.availableDays[dayName];
+
+    const isHoliday = isBankHoliday(currentDate, bankHolidays);
+
+    // Can only pickup if it's an available day AND not a bank holiday
+    const isPickupDay = scheduleData.availableDays[dayName] && !isHoliday;
+
     const dosage = calculateDayDosage(i, scheduleData);
 
     schedule.push({
       date: currentDate,
       dayOfWeek: dayName,
       isPickupDay,
+      isBankHoliday: isHoliday,
       dosage,
       dayNumber: i + 1,
     });
