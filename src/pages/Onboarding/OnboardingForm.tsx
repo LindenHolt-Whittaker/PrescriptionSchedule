@@ -143,7 +143,7 @@ const OnboardingForm = () => {
         </FieldError>
 
         <label htmlFor="dosage">
-          What is the {isDosageChanging ? "initial dosage" : "dosage"}? (mg)
+          What is the {isDosageChanging ? "initial dosage" : "dosage"}? (ml)
         </label>
         <input
           type="number"
@@ -151,11 +151,11 @@ const OnboardingForm = () => {
           {...register("dosage", {
             min: {
               value: VALIDATION_RULES.dosage.min,
-              message: `Dosage must be at least ${VALIDATION_RULES.dosage.min}mg`,
+              message: `Dosage must be at least ${VALIDATION_RULES.dosage.min}ml`,
             },
             max: {
               value: VALIDATION_RULES.dosage.max,
-              message: `Dosage cannot exceed ${VALIDATION_RULES.dosage.max}mg`,
+              message: `Dosage cannot exceed ${VALIDATION_RULES.dosage.max}ml`,
             },
             required: "Please provide dosage amount",
             validate: {
@@ -177,7 +177,7 @@ const OnboardingForm = () => {
             <label htmlFor="changeAmount">
               How much is the dosage{" "}
               {prescriptionType === "increasing" ? "increasing" : "reducing"}{" "}
-              by? (mg)
+              by? (ml)
             </label>
             <input
               type="number"
@@ -188,11 +188,11 @@ const OnboardingForm = () => {
                   : false,
                 min: {
                   value: VALIDATION_RULES.changeAmount.min,
-                  message: `Change amount must be at least ${VALIDATION_RULES.changeAmount.min}mg`,
+                  message: `Change amount must be at least ${VALIDATION_RULES.changeAmount.min}ml`,
                 },
                 max: {
                   value: VALIDATION_RULES.changeAmount.max,
-                  message: `Change amount cannot exceed ${VALIDATION_RULES.changeAmount.max}mg`,
+                  message: `Change amount cannot exceed ${VALIDATION_RULES.changeAmount.max}ml`,
                 },
               })}
             />
@@ -202,7 +202,7 @@ const OnboardingForm = () => {
 
             <label htmlFor="changeFrequency">
               How frequently is the prescription{" "}
-              {prescriptionType === "increasing" ? "increasing" : "decreasing"}?
+              {prescriptionType === "increasing" ? "increasing" : "decreasing"}?{" "}
               (days)
             </label>
             <input

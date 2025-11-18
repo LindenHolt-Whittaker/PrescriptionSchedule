@@ -31,7 +31,7 @@ const ScheduleDataFields = ({
     },
     {
       label: isStabilisingType ? "Dosage" : "Initial dosage",
-      field: `${scheduleData.dosage}mg`,
+      field: `${scheduleData.dosage}ml`,
       column: 1,
     },
   ];
@@ -41,7 +41,7 @@ const ScheduleDataFields = ({
       ...[
         {
           label: `Dosage ${isIncreasingType ? "increase" : "reduction"} amount`,
-          field: `${scheduleData.changeAmount}mg`,
+          field: `${scheduleData.changeAmount}ml`,
           column: 1,
         },
         {

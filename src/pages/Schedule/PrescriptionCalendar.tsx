@@ -126,7 +126,7 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                   }`}
                 >
                   {day.dosage}
-                  <span className="PrescriptionCalendar__dosage--mg">mg</span>
+                  <span className="PrescriptionCalendar__dosage--ml">ml</span>
                 </div>
 
                 {selectedDay?.date.toISOString() === day.date.toISOString() && (
@@ -142,7 +142,7 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
                         })}
                       </div>
                       <div className="PrescriptionCalendar__popup__detail">
-                        Dosage: {day.dosage}mg
+                        Dosage: {day.dosage}ml
                       </div>
                       {day.isPickupDay && (
                         <div className="PrescriptionCalendar__popup__badge PrescriptionCalendar__popup__badge--pickup">
