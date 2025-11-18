@@ -4,8 +4,13 @@
   color: colors.$text-error;
   font-size: 0.8rem;
   font-style: italic;
+  
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s ease-out;
 
-  &__hidden {
-    visibility: hidden;
+  &--hidden {
+    opacity: 0;
+    transform: translateY(-0.25rem);
   }
 }
