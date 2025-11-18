@@ -27,6 +27,45 @@ const findFirstPickupDate = (
   return currentDate;
 };
 
+/**
+ * Calculate the dosage for a specific day based on prescription type
+ */
+const calculateDayDosage = (
+  dayIndex: number,
+  scheduleData: PrescriptionData
+): number => {
+  const { prescriptionType, changeAmount, changeFrequency } = scheduleData;
+  let dosage = scheduleData.dosage;
+
+  if (changeAmount && changeFrequency) {
+    const changes = Math.floor(dayIndex / changeFrequency);
+
+    if (prescriptionType === "increasing") {
+      dosage += changes * changeAmount;
+    } else if (scheduleData.prescriptionType === "reducing") {
+      dosage -= changes * changeAmount;
+      dosage = Math.max(0, dosage);
+    }
+  }
+
+  return dosage;
+};
+
+/**
+ * Find the next pickup day index from a given position
+ */
+const findNextPickupIndex = (
+  schedule: ScheduleDay[],
+  fromIndex: number
+): number | null => {
+  for (let i = fromIndex + 1; i < schedule.length; i++) {
+    if (schedule[i].isPickupDay) {
+      return i;
+    }
+  }
+  return null; // No more pickup days
+};
+
 // TODO: account for bank holidays using gov API 
 export const generateSchedule = (
   scheduleData: PrescriptionData
@@ -48,21 +87,7 @@ export const generateSchedule = (
       .toLocaleDateString("en-GB", { weekday: "long" })
       .toLowerCase() as DayName;
     const isPickupDay = scheduleData.availableDays[dayName];
-
-    // Calculate base dosage for this day based on prescription type
-    let dosage = scheduleData.dosage;
-    
-    if (scheduleData.changeAmount && scheduleData.changeFrequency) {
-      const daysPassed = i;
-      const changes = Math.floor(daysPassed / scheduleData.changeFrequency);
-
-      if (scheduleData.prescriptionType === "increasing") {
-        dosage += changes * scheduleData.changeAmount;
-      } else if (scheduleData.prescriptionType === "reducing") {
-        dosage -= changes * scheduleData.changeAmount;
-        dosage = Math.max(0, dosage);
-      }
-    }
+    const dosage = calculateDayDosage(i, scheduleData);
 
     schedule.push({
       date: currentDate,
@@ -73,28 +98,30 @@ export const generateSchedule = (
     });
   }
 
-  // Redistribute dosages from non-pickup days to previous pickup days
+  // Redistribute dosages from pickup day to next pickup day
   for (let i = 0; i < schedule.length; i++) {
     const currentDay = schedule[i];
-    
-    // If this is NOT a pickup day and has dosage to redistribute
-    if (!currentDay.isPickupDay && currentDay.dosage > 0) {
-      // Find the most recent previous pickup day
-      let previousPickupIndex = -1;
-      for (let j = i - 1; j >= 0; j--) {
-        if (schedule[j].isPickupDay) {
-          previousPickupIndex = j;
-          break;
+
+    if (currentDay.isPickupDay) {
+      const nextPickupIndex = findNextPickupIndex(schedule, i);
+      const endIndex = nextPickupIndex ?? schedule.length;
+
+      // Accumulate all dosages from current day to day before next pickup
+      let totalDosage = 0;
+      for (let j = i; j < endIndex; j++) {
+        totalDosage += schedule[j].dosage;
+        // Set non-pickup days to 0
+        if (j > i) {
+          schedule[j].dosage = 0;
         }
       }
 
-      if (previousPickupIndex !== -1) {
-        // Move dosage to the previous pickup day, and set current day dosage to 0
-        schedule[previousPickupIndex].dosage += currentDay.dosage;
-        currentDay.dosage = 0;
-      } else {
-        // No previous pickup day exists (should never occur, as we start on a pickup day)
-        console.warn('Found non-pickup day before first pickup day');
+      // Assign accumulated dosage to pickup day
+      currentDay.dosage = totalDosage;
+
+      // If no dosage, then unassign pickup status
+      if (currentDay.dosage <= 0) {
+        currentDay.isPickupDay = false;
       }
     }
   }
