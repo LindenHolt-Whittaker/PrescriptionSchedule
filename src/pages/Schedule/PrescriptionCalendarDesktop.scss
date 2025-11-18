@@ -115,11 +115,16 @@
   }
 
   &__dosage {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     color: colors.$gray;
+    padding-right: 0.25rem;
+    position: relative;
+    display: inline-block;
 
     &--ml {
       font-size: 0.5rem;
+      position:absolute;
+      top: 11%;
     }
 
     &--pickup {
@@ -190,15 +195,6 @@
         color: colors.$gray-dark;
       }
     }
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 0 -200%;
-  }
-  100% {
-    background-position: 0 200%;
   }
 }
 

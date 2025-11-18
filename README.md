@@ -26,9 +26,9 @@ This application helps users plan their prescription pickups by:
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Home Page](images/image_desktop_0.png) | ![Home Page Mobile](images/image_mobile_0.png) |
-| ![Onboarding Form](images/image_desktop_1.png) | ![Onboarding Form Mobile](images/image_mobile_1.png) |
-| ![Calendar Schedule](images/image_desktop_2.png) | ![List Schedule Mobile](images/image_mobile_2.png) |
+| ![Home Page](images/desktop_image_0.png) | ![Home Page Mobile](images/mobile_image_0.png) |
+| ![Onboarding Form](images/desktop_image_1.png) | ![Onboarding Form Mobile](images/mobile_image_1.png) |
+| ![Calendar Schedule](images/desktop_image_2.png) | ![List Schedule Mobile](images/mobile_image_2.png) |
 
 ## Tech Stack
 
