@@ -3,21 +3,28 @@
 @use "../styles/mixins" as mixins;
 
 .Header {
-  display: flex;
-  justify-content: space-between;
-
-  padding: 0 0.1rem 0 0;
-
-  @include breakpoints.respond(sm) {
-    padding: 0 0.25rem 0 2rem;
-  }
-
-  @include breakpoints.respond(md) {
-    padding: 0 3rem 0 4rem;
-  }
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
 
   background-color: colors.$bg-light;
   box-shadow: 0 0 0.25rem 0 colors.$gray;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 0 0.1rem 0 0;
+    
+    @include breakpoints.respond(sm) {
+      padding: 0 0.25rem 0 2rem;
+    }
+    
+    @include breakpoints.respond(md) {
+      padding: 0 3rem 0 4rem;
+    }
+  }
 
   &__link,
   &__scheduleKey__button {
