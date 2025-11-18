@@ -5,19 +5,19 @@ import Schedule from './pages/Schedule'
 import './App.scss'
 import { InvalidSchedule, NotFound } from './pages/ErrorPages'
 
+const basename = import.meta.env.BASE_URL
+
 function App() {
   return (
-    <>
-      <BrowserRouter>      
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/invalidSchedule" element={<InvalidSchedule />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter basename={basename}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/invalidSchedule" element={<InvalidSchedule />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
