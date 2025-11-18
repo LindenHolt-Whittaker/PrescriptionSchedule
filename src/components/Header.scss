@@ -1,4 +1,5 @@
 @use "../styles/colors" as colors;
+@use "../styles/mixins" as mixins;
 
 .Header {
   display: flex;
@@ -6,6 +7,7 @@
   padding: 0 3rem 0 4rem;
 
   background-color: colors.$bg-light;
+  box-shadow: 0 0 0.25rem 0 colors.$gray;
 
   &__link,
   &__scheduleKey__button {
@@ -33,7 +35,7 @@
       border-left: none;
     }
 
-    &:hover {
+    & .active {
       text-decoration: underline;
       text-underline-offset: 0.4rem;
     }
@@ -41,69 +43,87 @@
 
   &__scheduleKey {
     display: flex;
-    align-items: center;
-
-    &__input {
-      height: 2rem;
-      padding: 0 0.5rem;
-      
-      color: colors.$gray-darker;
-
-      border: 1px solid colors.$gray-light;
-      border-radius: 0.5rem;
-      
-      z-index: 2;
-      position: relative;
-      
-      transition: all 0.2s ease;
-
-      &:focus {
-        outline: none;
-        border-color: colors.$blue;
-        box-shadow: 0 0 0.25rem 0 colors.$blue-dark;
-      }
-    }
-
-    &__button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 1.1rem;
-      color: colors.$gray-darker;
-      background-color: colors.$white;
-
-      height: 2.1rem;
-      padding: 0 0.3rem 0.1rem;
-
-      border: 1px solid colors.$gray-light;
-      border-radius: 0 0.5rem 0.5rem 0;
-
-      position: relative;
-      
-      transform: translateX(-100%);
-      opacity: 0;
-      
-      transition: all 0.2s ease;
-
-      &:focus {
-        outline: none;
-        border-color: colors.$blue;
-        box-shadow: 0 0 0.25rem 0 colors.$blue-dark;
-
-        z-index: 3;
-      }
-    }
+    align-items: center;    
 
     &--hasInput {
-      .Header__scheduleKey__input {
+      .Header__scheduleKeyInput {
         border-radius: 0.5rem 0 0 0.5rem;
       }
 
-      .Header__scheduleKey__button {
+      .Header__scheduleKeyButton {
         transform: translateX(-1px);
         opacity: 1;
       }
+    }
+  }
+
+  &__scheduleKeyInput {
+    @include mixins.flex-center;
+
+    height: 2rem;
+    padding: 0 0.5rem;
+
+    color: colors.$gray-darker;
+    background-color: colors.$white;
+
+    border: 1px solid colors.$gray-light;
+    border-radius: 0.5rem;
+
+    z-index: 2;
+    position: relative;
+
+    transition: all 0.2s ease;
+
+    &:focus-within {
+      outline: none;
+      border-color: colors.$blue;
+      box-shadow: 0 0 0.25rem 0 colors.$blue-dark;
+    }
+
+    input {
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+
+      @include mixins.prevent-autofill-styles;
+    }
+  }
+
+  &__scheduleKeyHash {
+    color: colors.$gray;
+    margin-right: 0.25rem;
+
+    @include mixins.no-select;
+  }
+
+  &__scheduleKeyButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.1rem;
+    color: colors.$gray-darker;
+    background-color: colors.$white;
+
+    height: 2.1rem;
+    padding: 0 0.3rem 0.1rem;
+
+    border: 1px solid colors.$gray-light;
+    border-radius: 0 0.5rem 0.5rem 0;
+
+    position: relative;
+
+    transform: translateX(-100%);
+    opacity: 0;
+
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: colors.$blue;
+      box-shadow: 0 0 0.25rem 0 colors.$blue-dark;
+
+      z-index: 3;
     }
   }
 }

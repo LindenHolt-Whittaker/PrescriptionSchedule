@@ -1,47 +1,58 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import "./Header.scss";
 
 const Header = () => {
   const [scheduleKey, setScheduleKey] = useState<string>("");
-
-  console.log(scheduleKey);
-
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
 
   const onScheduleKeySubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent page reload
-    navigate(`/schedule?k=${scheduleKey}`);
+    e.preventDefault();
+    if (scheduleKey.trim()) {
+      navigate(`/schedule?k=${scheduleKey}`);
+    }
   };
 
   return (
     <div className="Header">
       <div className="Header__linkGroup">
         <NavLink to="/" className="Header__link">
-          Home
+          {({ isActive }) => (
+            <span className={isActive ? "active" : ""}>Home</span>
+          )}
         </NavLink>
         <NavLink to="/onboarding" className="Header__link">
-          Schedule
+          {({ isActive }) => (
+            <span className={isActive ? "active" : ""}>Get Schedule</span>
+          )}
         </NavLink>
       </div>
 
-      <form
-        onSubmit={onScheduleKeySubmit}
-        className={`Header__scheduleKey ${
-          scheduleKey ? "Header__scheduleKey--hasInput" : ""
-        }`}
-      >
-        <input
-          className="Header__scheduleKey__input"
-          type="text"
-          name="scheduleKey"
-          placeholder="Enter Schedule Key #"
-          onChange={(e) => setScheduleKey(e.target.value)}
-        />
-        <button className="Header__scheduleKey__button" type="submit">
-          ➜
-        </button>
-      </form>
+      {!isHomePage && (
+        <form
+          onSubmit={onScheduleKeySubmit}
+          className={`Header__scheduleKey ${
+            scheduleKey ? "Header__scheduleKey--hasInput" : ""
+          }`}
+        >
+          <div className="Header__scheduleKeyInput">
+            <span className="Header__scheduleKeyHash">#</span>
+            <input
+              type="text"
+              name="scheduleKey"
+              placeholder="Enter schedule key"
+              value={scheduleKey}
+              onChange={(e) => setScheduleKey(e.target.value)}
+            />
+          </div>
+          <button className="Header__scheduleKeyButton" type="submit">
+            ➜
+          </button>
+        </form>
+      )}
     </div>
   );
 };

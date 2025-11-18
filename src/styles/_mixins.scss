@@ -3,3 +3,19 @@
   justify-content: center;
   align-items: center;
 }
+
+@mixin no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+@mixin prevent-autofill-styles {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: inherit !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+  }
+}

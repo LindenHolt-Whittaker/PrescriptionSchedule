@@ -14,9 +14,7 @@
     font-size: 1.5rem;
 
     &__hash {
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
+      @include mixins.no-select;
 
       color: colors.$gray;
     }
