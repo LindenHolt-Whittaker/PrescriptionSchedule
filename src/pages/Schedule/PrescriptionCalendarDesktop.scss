@@ -44,31 +44,35 @@
     }
   }
 
-  &__day {
+  &__dayContainer {
     position: relative;
+    aspect-ratio: 1;
+  }
+
+  &__day {
     color: colors.$text-primary;
 
     @include mixins.flex-center;
     flex-direction: column;
-    aspect-ratio: 1 / 1;
     padding: 0.25rem;
     line-height: 1.2rem;
 
     background-color: colors.$gray-lighter;
     border: 2px solid colors.$gray-lighter;
-    border-radius: 100%;
+    border-radius: 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
       background-color: colors.$gray-light;
       border-color: colors.$gray-light;
+      transform: scale(1.1);
     }
 
     &--holiday {
       background-color: colors.$gray-lighter;
       border: 2px solid colors.$gray;
-    
+
       &:hover {
         background-color: colors.$gray-light;
         border-color: colors.$gray;
@@ -81,12 +85,13 @@
 
       &:hover {
         background-color: colors.$blue-lightest;
-        border-color: colors.$blue;
+        border-color: colors.$blue-light;
       }
     }
 
     &--selected {
-      box-shadow: 0 0 1rem 0 colors.$gray-light;
+      box-shadow: 0 1rem 1rem 0 colors.$gray-lighter;
+      transform: scale(1.1);
 
       &.PrescriptionCalendarDesktop__day {
         background-color: colors.$gray-light;
@@ -100,7 +105,7 @@
 
       &.PrescriptionCalendarDesktop__day--pickup {
         background-color: colors.$blue-lightest;
-        border-color: colors.$blue;
+        border-color: colors.$blue-light;
       }
     }
 
@@ -115,16 +120,15 @@
   }
 
   &__dosage {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: colors.$gray;
-    padding-right: 0.25rem;
     position: relative;
     display: inline-block;
 
     &--ml {
       font-size: 0.5rem;
-      position:absolute;
-      top: 11%;
+      position: absolute;
+      top: 6%;
     }
 
     &--pickup {

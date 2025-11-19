@@ -77,37 +77,39 @@ const PrescriptionCalendarDesktop = ({
               )}
 
             {days.map((day) => (
-              <div
-                key={day.date.toISOString()}
-                onClick={() => handleDayClick(day)}
-                className={`PrescriptionCalendarDesktop__day ${
-                  day.isPickupDay
-                    ? "PrescriptionCalendarDesktop__day--pickup"
-                    : ""
-                } ${
-                  day.isBankHoliday
-                    ? "PrescriptionCalendarDesktop__day--holiday"
-                    : ""
-                } ${
-                  selectedDay?.date.toISOString() === day.date.toISOString()
-                    ? "PrescriptionCalendarDesktop__day--selected"
-                    : ""
-                }`}
-              >
-                <div className="PrescriptionCalendarDesktop__dayNumber">
-                  {day.date.getDate()}
-                </div>
+              <div className="PrescriptionCalendarDesktop__dayContainer">
                 <div
-                  className={`PrescriptionCalendarDesktop__dosage ${
+                  key={day.date.toISOString()}
+                  onClick={() => handleDayClick(day)}
+                  className={`PrescriptionCalendarDesktop__day ${
                     day.isPickupDay
-                      ? "PrescriptionCalendarDesktop__dosage--pickup"
+                      ? "PrescriptionCalendarDesktop__day--pickup"
+                      : ""
+                  } ${
+                    day.isBankHoliday
+                      ? "PrescriptionCalendarDesktop__day--holiday"
+                      : ""
+                  } ${
+                    selectedDay?.date.toISOString() === day.date.toISOString()
+                      ? "PrescriptionCalendarDesktop__day--selected"
                       : ""
                   }`}
                 >
-                  {day.dosage}
-                  <span className="PrescriptionCalendarDesktop__dosage--ml">
-                    ml
-                  </span>
+                  <div className="PrescriptionCalendarDesktop__dayNumber">
+                    {day.date.getDate()}
+                  </div>
+                  <div
+                    className={`PrescriptionCalendarDesktop__dosage ${
+                      day.isPickupDay
+                        ? "PrescriptionCalendarDesktop__dosage--pickup"
+                        : ""
+                    }`}
+                  >
+                    {day.dosage}
+                    <span className="PrescriptionCalendarDesktop__dosage--ml">
+                      ml
+                    </span>
+                  </div>
                 </div>
 
                 {selectedDay?.date.toISOString() === day.date.toISOString() && (

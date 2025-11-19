@@ -30,11 +30,16 @@
     line-height: 1.5rem;
   }
 
-  &:hover:not(:disabled),
-  &:focus {
+  &:hover:not(:disabled) {
     background-color: colors.$blue-dark;
     transform: translateY(-0.1rem);
     box-shadow: 0 0.25rem 0.25rem colors.$gray-light;
+  }
+
+  &:focus {
+    outline: 2px solid colors.$white;
+    background-color: colors.$blue;
+    box-shadow: 0 0 1rem 0 colors.$gray;
   }
 
   &:active {

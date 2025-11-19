@@ -228,7 +228,7 @@ const OnboardingForm = () => {
           </>
         )}
 
-        <Button type="submit">Submit Onboarding</Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Page>
   );
