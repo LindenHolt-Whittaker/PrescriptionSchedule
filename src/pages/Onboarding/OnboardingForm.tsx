@@ -3,7 +3,7 @@ import {
   Controller,
   type FieldError as FieldErrorType,
 } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,7 +11,8 @@ import Page from "../../components/Page";
 import FieldError from "../../components/FieldError";
 import Button from "../../components/Button";
 import { DAYS, getDefaultDays, capitalizeDayName } from "../../utils/days";
-import { encodePrescriptionData } from "../../utils/scheduleKey";
+import { decodePrescriptionKey, encodePrescriptionData } from "../../utils/scheduleKey";
+import { validatePrescriptionData } from "../../utils/validatePrescriptionData";
 import {
   VALIDATION_RULES,
   isValidDosageTotal,
@@ -20,6 +21,35 @@ import { type PrescriptionData } from "../../types/prescriptionData";
 import "./OnboardingForm.scss";
 
 const OnboardingForm = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const editKey = searchParams.get("k");
+  const navigate = useNavigate();
+
+  let defaultValues = {
+      initialDate: new Date(),
+      availableDays: getDefaultDays(),
+      prescriptionType: "",
+      dosage: 0,
+      changeAmount: undefined,
+      changeFrequency: undefined,
+    } as PrescriptionData;
+
+  if (editKey) {
+    try {
+      const decodedData = decodePrescriptionKey(editKey);
+      const validData = validatePrescriptionData(decodedData);
+      if (validData) {
+        defaultValues = {
+          ...validData,
+          initialDate: new Date(validData.initialDate),
+        };
+      }
+    } catch (error) {
+      console.error("Failed to decode edit key:", error);
+    }
+  }
+
   const {
     register,
     handleSubmit,
@@ -28,17 +58,8 @@ const OnboardingForm = () => {
     watch,
     formState: { errors, isSubmitted },
   } = useForm<PrescriptionData>({
-    defaultValues: {
-      initialDate: new Date(),
-      availableDays: getDefaultDays(),
-      prescriptionType: "",
-      dosage: 0,
-      changeAmount: undefined,
-      changeFrequency: undefined,
-    },
+    defaultValues
   });
-
-  const navigate = useNavigate();
 
   const onSubmit = (data: PrescriptionData) => {
     try {

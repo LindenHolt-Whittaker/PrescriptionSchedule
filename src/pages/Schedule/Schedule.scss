@@ -1,3 +1,4 @@
+@use "../../styles/breakpoints" as breakpoints;
 @use "../../styles/colors" as colors;
 @use "../../styles/mixins" as mixins;
 
@@ -6,12 +7,39 @@
     @include mixins.flex-center;
   }
 
+  &__detailsContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    
+    gap: 3rem;
+    margin: 0.5rem 0 4rem;
+
+    @include breakpoints.respond(md) {
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      justify-content: space-between;
+      
+      gap: 0;
+      margin: 4rem 0;
+    }
+  }
+
+  &__data {
+    text-align: left;
+  }
+
   &__scheduleKey {
-    text-align: right;
     gap: 0.5rem;
-    margin: 1.5rem 0;
+    margin-top: 1.5rem;
 
     font-size: 1.5rem;
+
+    text-align: left;
+
+    @include breakpoints.respond(md) {
+      text-align: right;
+    }
 
     &__hash {
       @include mixins.no-select;
