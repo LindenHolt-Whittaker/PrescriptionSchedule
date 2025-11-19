@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+
+import { formatLongDate, formatShortDate } from "../../utils/date";
 import { type ScheduleDay } from "../../types/scheduleData";
 import "./PrescriptionCalendarDesktop.scss";
 
@@ -105,7 +107,7 @@ const PrescriptionCalendarDesktop = ({
                         : ""
                     }`}
                   >
-                    {day.dosage}
+                    {day.pickupDosage}
                     <span className="PrescriptionCalendarDesktop__dosage--ml">
                       ml
                     </span>
@@ -120,18 +122,24 @@ const PrescriptionCalendarDesktop = ({
                     <div className="PrescriptionCalendarDesktop__popup__chevron" />
                     <div className="PrescriptionCalendarDesktop__popup__content">
                       <div className="PrescriptionCalendarDesktop__popup__heading">
-                        {day.date.toLocaleDateString("en-GB", {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
+                        {formatLongDate(day.date)}
                       </div>
-                      <div className="PrescriptionCalendarDesktop__popup__detail">
-                        Dosage: {day.dosage}
-                        <span className="PrescriptionCalendarDesktop__popup__detail--ml">
+                      <div className="PrescriptionCalendarDesktop__popup__dosage">
+                        Prescription amount: {day.pickupDosage}
+                        <span className="PrescriptionCalendarDesktop__popup__dosage__ml">
                           ml
                         </span>
+                      </div>
+                      <div className="PrescriptionCalendarDesktop__popup__dosageDetails">
+                        Dosage details:
+                        {day.dosageDetails.map(({ date, dosage }) => (
+                          <div>
+                            {formatShortDate(date)}: {dosage}
+                            <span className="PrescriptionCalendarDesktop__popup__dosageDetails__ml">
+                              ml
+                            </span>
+                          </div>
+                        ))}
                       </div>
                       {day.isPickupDay && (
                         <div className="PrescriptionCalendarDesktop__popup__badge PrescriptionCalendarDesktop__popup__badge--pickup">

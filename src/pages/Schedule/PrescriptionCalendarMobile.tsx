@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import { formatLongDate, formatShortDate } from "../../utils/date";
 import { type ScheduleDay } from "../../types/scheduleData";
 import "./PrescriptionCalendarMobile.scss";
 
@@ -54,7 +56,7 @@ const PrescriptionCalendarMobile = ({
                   </div>
                 )}
                 <div className="PrescriptionCalendarMobile__dosage">
-                  {day.dosage}
+                  {day.pickupDosage}
                   <span className="PrescriptionCalendarMobile__dosage--ml">
                     ml
                   </span>
@@ -85,19 +87,25 @@ const PrescriptionCalendarMobile = ({
                   : ""
               }`}
             >
-              <div className="PrescriptionCalendarMobile__detail">
-                {day.date.toLocaleDateString("en-GB", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+              <div className="PrescriptionCalendarMobile__details__heading">
+                {formatLongDate(day.date)}
               </div>
-              <div className="PrescriptionCalendarMobile__detail">
-                Dosage: {day.dosage}
-                <span className="PrescriptionCalendarMobile__detail--ml">
+              <div className="PrescriptionCalendarMobile__details__dosage">
+                Prescription amount: {day.pickupDosage}
+                <span className="PrescriptionCalendarMobile__details__dosage__ml">
                   ml
                 </span>
+              </div>
+              <div className="PrescriptionCalendarMobile__details__dosageDetails">
+                Dosage details:
+                {day.dosageDetails.map(({ date, dosage }) => (
+                  <div>
+                    {formatShortDate(date)}: {dosage}
+                    <span className="PrescriptionCalendarMobile__details__dosageDetails__ml">
+                      ml
+                    </span>
+                  </div>
+                ))}
               </div>
               {day.isPickupDay && (
                 <div className="PrescriptionCalendarMobile__badge PrescriptionCalendarMobile__badge--pickup">

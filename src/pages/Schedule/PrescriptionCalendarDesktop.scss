@@ -170,14 +170,24 @@
       color: colors.$text-primary;
     }
 
-    &__detail {
-      font-size: 0.9rem;
+    &__dosage {
+      font-size: 0.875rem;
       text-align: left;
       margin-bottom: 0.5rem;
       color: colors.$text-secondary;
 
-      &--ml {
-        font-size: 0.7rem;
+      &__ml {
+        font-size: 0.75rem;
+      }
+    }
+
+    &__dosageDetails {
+      text-align: left;
+      font-size: 0.75rem;
+      font-family: monospace;
+
+      &__ml {
+        font-size: 0.625rem;
       }
     }
 

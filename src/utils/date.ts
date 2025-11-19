@@ -6,3 +6,11 @@ export const formatLongDate = (date: Date): string => {
     day: "numeric",
   });
 };
+
+export const formatShortDate = (date: Date): string => {
+  return date.toLocaleDateString("en-GB", {
+    year: "2-digit",
+    month: "numeric",
+    day: "2-digit",
+  });
+};

@@ -109,15 +109,31 @@
         border-top-color: colors.$blue-lighter;
       }
     }
-  }
 
-  &__detail {
-    margin-top: 0.75rem;
-    font-size: 0.9rem;
-    color: colors.$text-primary;
+    &__heading {
+      font-size: 0.75rem;
+      text-align: left;
+      margin: 0.75rem 0;
+      color: colors.$text-primary;
+    }
 
-    &--ml {
-      font-size: 0.7rem;
+    &__dosage {
+      margin-top: 0.75rem;
+      color: colors.$text-primary;
+
+      &__ml {
+        font-size: 0.75rem;
+      }
+    }
+
+    &__dosageDetails {
+      margin: 1rem 0 0.75rem;
+      font-size: 0.75rem;
+      font-family: monospace;
+
+      &__ml {
+        font-size: 0.625rem;
+      }
     }
   }
 

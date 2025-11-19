@@ -1,5 +1,5 @@
 import { type PrescriptionData } from "../types/prescriptionData";
-import { type ScheduleDay } from "../types/scheduleData";
+import { type DosageDetail, type ScheduleDay } from "../types/scheduleData";
 import { type DayName } from "../types/days";
 import { isBankHoliday } from "./bankHolidays";
 
@@ -104,6 +104,8 @@ export const generateSchedule = (
       isPickupDay,
       isBankHoliday: isHoliday,
       dosage,
+      pickupDosage: dosage,
+      dosageDetails: [],
       dayNumber: i + 1,
     });
   }
@@ -116,21 +118,33 @@ export const generateSchedule = (
       const nextPickupIndex = findNextPickupIndex(schedule, i);
       const endIndex = nextPickupIndex ?? schedule.length;
 
-      // Accumulate all dosages from current day to day before next pickup
+      // Build dosageDetails array and accumulate total from current day to day before next pickup
+      const details: DosageDetail[] = [];
       let totalDosage = 0;
       for (let j = i; j < endIndex; j++) {
-        totalDosage += schedule[j].dosage;
+        const day = schedule[j];
+        
+        // Only add to details if there's a dosage
+        if (day.dosage > 0) {
+          details.push({
+            date: new Date(day.date),
+            dosage: day.dosage,
+          });
+          totalDosage += day.dosage;
+        }
+
         // Set non-pickup days to 0
         if (j > i) {
-          schedule[j].dosage = 0;
+          schedule[j].pickupDosage = 0;
         }
       }
 
-      // Assign accumulated dosage to pickup day
-      currentDay.dosage = totalDosage;
+      // Assign accumulated dosage and details to pickup day
+      currentDay.pickupDosage = totalDosage;
+      currentDay.dosageDetails = details;
 
-      // If no dosage, then unassign pickup status
-      if (currentDay.dosage <= 0) {
+      // If no pickupDosage, unassign pickup status
+      if (currentDay.pickupDosage <= 0) {
         currentDay.isPickupDay = false;
       }
     }
