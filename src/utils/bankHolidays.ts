@@ -18,15 +18,23 @@ interface BankHolidaysResponse {
 
 export const fetchUKBankHolidays = async (
   division:
-    | "england-and-wales"
+    | "england"
     | "scotland"
-    | "northern-ireland"
+    | "wales"
+    | "northern ireland"
 ): Promise<Set<string>> => {
+  const apiDivision = {
+    england: "england-and-wales",
+    wales: "england-and-wales",
+    scotland: "scotland",
+    "northern ireland": "northern-ireland",
+  }[division];
+
   try {
     const response = await fetch("https://www.gov.uk/bank-holidays.json");
     const data: BankHolidaysResponse = await response.json();
 
-    const dates = new Set(data[division].events.map((event) => event.date));
+    const dates = new Set(data[apiDivision].events.map((event) => event.date));
 
     return dates;
   } catch (error) {

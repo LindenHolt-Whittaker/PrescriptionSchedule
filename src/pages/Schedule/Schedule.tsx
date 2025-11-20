@@ -49,6 +49,10 @@ const Schedule = () => {
     <Page title="Your prescription schedule" className="Schedule">
       <div className="PrescriptionCalendarContainer">
         <PrescriptionCalendar scheduleData={scheduleData} />
+        <div className="PrescriptionCalendarContainer__countrySubtitle">
+          {scheduleData.country.charAt(0).toUpperCase() +
+          scheduleData.country.slice(1)} bank holidays unavailable for prescription pickup
+        </div>
       </div>
 
       <div className="Schedule__detailsContainer">

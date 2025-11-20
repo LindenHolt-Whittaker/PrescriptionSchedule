@@ -5,12 +5,28 @@
 .Schedule {
   .PrescriptionCalendarContainer {
     @include mixins.flex-center;
+    flex-direction: column-reverse;
+
+    @include breakpoints.respond(md) {
+      flex-direction: column;
+    }
+
+    &__countrySubtitle {
+      color: colors.$text-subtitle;
+      font-style: italic;
+      font-size: 0.75rem;
+      margin: 0 0 0.5rem;
+
+      @include breakpoints.respond(md) {
+        margin: 0.5rem 0 0;
+      }
+    }
   }
 
   &__detailsContainer {
     display: flex;
     flex-direction: column-reverse;
-    
+
     gap: 3rem;
     margin: 0.5rem 0 4rem;
 
@@ -19,9 +35,9 @@
       flex-direction: row;
       align-items: end;
       justify-content: space-between;
-      
+
       gap: 0;
-      margin: 4rem 0;
+      margin: 1.5rem 0 0.5rem;
     }
   }
 
@@ -32,9 +48,7 @@
   &__scheduleKey {
     gap: 0.5rem;
     margin-top: 1.5rem;
-
     font-size: 1.5rem;
-
     text-align: left;
 
     @include breakpoints.respond(md) {

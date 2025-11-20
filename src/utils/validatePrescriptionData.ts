@@ -6,6 +6,7 @@ import {
   isValidChangeFrequency,
   isValidAvailableDays,
   isValidPrescriptionType,
+  isValidCountry,
 } from "../validators/prescription";
 
 export const validatePrescriptionData = (
@@ -19,12 +20,17 @@ export const validatePrescriptionData = (
       !parsed.initialDate ||
       !parsed.availableDays ||
       !parsed.prescriptionType ||
+      !parsed.country ||
       parsed.dosage === undefined
     ) {
       return null;
     }
 
     if (!isValidPrescriptionType(parsed.prescriptionType)) {
+      return null;
+    }
+
+    if (!isValidCountry(parsed.country)) {
       return null;
     }
 

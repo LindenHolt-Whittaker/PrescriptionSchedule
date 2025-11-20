@@ -33,6 +33,7 @@ const OnboardingForm = () => {
       dosage: 0,
       changeAmount: undefined,
       changeFrequency: undefined,
+      country: "",
     } as PrescriptionData;
 
   if (editKey) {
@@ -248,6 +249,25 @@ const OnboardingForm = () => {
             </FieldError>
           </>
         )}
+
+        <label htmlFor="country">
+          Where are you picking up this prescription?
+        </label>
+        <select
+          id="country"
+          {...register("country", {
+            required: "Please select a country",
+          })}
+        >
+          <option value="">Select country</option>
+          <option value="england">England</option>
+          <option value="scotland">Scotland</option>
+          <option value="wales">Wales</option>
+          <option value="northern ireland">Northern Ireland</option>
+        </select>
+        <FieldError>
+          {errors.country && errors.country.message}
+        </FieldError>
 
         <Button type="submit">Submit</Button>
       </form>

@@ -3,6 +3,7 @@ import { type AvailableDays } from "../types/days";
 import {
   VALIDATION_RULES,
   isValidPrescriptionType,
+  isValidCountry,
 } from "../validators/prescription";
 
 /*
@@ -22,6 +23,23 @@ const BASE62_ALPHABET =
 const EPOCH = new Date("2000-01-01").getTime();
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const MAX_DAY_INDEX = 0xffff; // 65535 days
+
+// Country enum → bits (3 bits = 8 possibilities)
+const COUNTRY_MAP: Record<PrescriptionData["country"], number> = {
+  "": 0,
+  england: 1,
+  scotland: 2,
+  wales: 3,
+  "northern ireland": 4,
+};
+
+const COUNTRY_MAP_INVERSE: PrescriptionData["country"][] = [
+  "",
+  "england",
+  "scotland",
+  "wales",
+  "northern ireland",
+];
 
 // Prescription type enum → bits
 const TYPE_MAP: Record<PrescriptionData["prescriptionType"], number> = {
@@ -73,7 +91,7 @@ function decodeBase62(str: string): bigint {
 // Weekday Encoding / Decoding
 // ------------------------------------------------------------
 function encodeWeekdays(days: AvailableDays): number {
-  // Order: sunday=bit0, monday=bit1, ..., saturday=bit6
+  // Order: monday=bit0, tuesday=bit1, ..., sunday=bit6
   const order: (keyof AvailableDays)[] = [
     "monday",
     "tuesday",
@@ -108,6 +126,11 @@ function decodeWeekdays(mask: number): AvailableDays {
 // Validation before encoding
 // ------------------------------------------------------------
 function validateForEncoding(data: PrescriptionData): void {
+  // Validate country
+  if (!isValidCountry(data.country)) {
+    throw new Error(`Invalid country: ${data.country}`);
+  }
+
   // Validate prescription type
   if (!isValidPrescriptionType(data.prescriptionType)) {
     throw new Error(`Invalid prescription type: ${data.prescriptionType}`);
@@ -166,8 +189,8 @@ function validateForEncoding(data: PrescriptionData): void {
 // ------------------------------------------------------------
 // Main Encode
 // ------------------------------------------------------------
-// Bit Layout (total: 41 bits, MSB → LSB):
-// [ date:16 ][ days:7 ][ type:2 ][ dosage:6 ][ changeAmt:6 ][ changeFreq:4 ]
+// Bit Layout (total: 44 bits, MSB → LSB):
+// [ date:16 ][ days:7 ][ country:3 ][ type:2 ][ dosage:6 ][ changeAmt:6 ][ changeFreq:4 ]
 // ------------------------------------------------------------
 export function encodePrescriptionData(data: PrescriptionData): string {
   // Validate inputs before encoding
@@ -179,15 +202,17 @@ export function encodePrescriptionData(data: PrescriptionData): string {
   );
 
   const weekdayMask = encodeWeekdays(data.availableDays);
+  const countryBits = COUNTRY_MAP[data.country];
   const typeBits = TYPE_MAP[data.prescriptionType];
   const dosage = data.dosage;
   const changeAmt = data.changeAmount ?? 0;
   const changeFreq = data.changeFrequency ?? 0;
 
-  // Pack into bigint (41 bits)
+  // Pack into bigint (44 bits)
   const n =
-    (BigInt(dayIndex) << 25n) | // bits 25-40 (16 bits)
-    (BigInt(weekdayMask) << 18n) | // bits 18-24 (7 bits)
+    (BigInt(dayIndex) << 28n) | // bits 28-43 (16 bits)
+    (BigInt(weekdayMask) << 21n) | // bits 21-27 (7 bits)
+    (BigInt(countryBits) << 18n) | // bits 18-20 (3 bits)
     (BigInt(typeBits) << 16n) | // bits 16-17 (2 bits)
     (BigInt(dosage) << 10n) | // bits 10-15 (6 bits)
     (BigInt(changeAmt) << 4n) | // bits 4-9 (6 bits)
@@ -204,8 +229,9 @@ export function decodePrescriptionKey(key: string): PrescriptionData | null {
     const n = decodeBase62(key);
 
     // Extract bit fields
-    const dayIndex = Number((n >> 25n) & 0xffffn); // 16 bits
-    const weekdayMask = Number((n >> 18n) & 0x7fn); // 7 bits
+    const dayIndex = Number((n >> 28n) & 0xffffn); // 16 bits
+    const weekdayMask = Number((n >> 21n) & 0x7fn); // 7 bits
+    const countryBits = Number((n >> 18n) & 0x7n); // 3 bits
     const typeBits = Number((n >> 16n) & 0x3n); // 2 bits
     const dosage = Number((n >> 10n) & 0x3fn); // 6 bits
     const changeAmt = Number((n >> 4n) & 0x3fn); // 6 bits
@@ -214,6 +240,9 @@ export function decodePrescriptionKey(key: string): PrescriptionData | null {
     // Reconstruct date
     const initialDate = new Date(EPOCH + dayIndex * MS_PER_DAY);
 
+    // Reconstruct country
+    const country = COUNTRY_MAP_INVERSE[countryBits];
+
     // Reconstruct prescription type
     const prescriptionType = TYPE_MAP_INVERSE[typeBits];
 
@@ -221,6 +250,7 @@ export function decodePrescriptionKey(key: string): PrescriptionData | null {
     const availableDays = decodeWeekdays(weekdayMask);
 
     return {
+      country,
       initialDate,
       availableDays,
       prescriptionType,

@@ -17,7 +17,7 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    fetchUKBankHolidays("england-and-wales")
+    fetchUKBankHolidays(scheduleData.country)
       .then(setBankHolidays)
       .finally(() =>
         setTimeout(() => {

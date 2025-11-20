@@ -20,27 +20,56 @@ export const VALIDATION_RULES = {
 } as const;
 
 export const isValidDosage = (value: number): boolean => {
-  return value >= VALIDATION_RULES.dosage.min && value <= VALIDATION_RULES.dosage.max;
+  return (
+    value >= VALIDATION_RULES.dosage.min && value <= VALIDATION_RULES.dosage.max
+  );
 };
 
 export const isValidChangeAmount = (value: number): boolean => {
-  return value >= VALIDATION_RULES.changeAmount.min && value <= VALIDATION_RULES.changeAmount.max;
+  return (
+    value >= VALIDATION_RULES.changeAmount.min &&
+    value <= VALIDATION_RULES.changeAmount.max
+  );
 };
 
 export const isValidChangeFrequency = (value: number): boolean => {
-  return value >= VALIDATION_RULES.changeFrequency.min && value <= VALIDATION_RULES.changeFrequency.max;
+  return (
+    value >= VALIDATION_RULES.changeFrequency.min &&
+    value <= VALIDATION_RULES.changeFrequency.max
+  );
 };
 
 export const isValidAvailableDays = (availableDays: AvailableDays): boolean => {
   const count = Object.values(availableDays).filter(Boolean).length;
-  return count >= VALIDATION_RULES.availableDays.min && count <= VALIDATION_RULES.availableDays.max;
+  return (
+    count >= VALIDATION_RULES.availableDays.min &&
+    count <= VALIDATION_RULES.availableDays.max
+  );
 };
 
-export const isValidPrescriptionType = (type: string): type is "stabilisation" | "reducing" | "increasing" => {
-  return type === "stabilisation" || type === "reducing" || type === "increasing";
+export const isValidPrescriptionType = (
+  type: string
+): type is "stabilisation" | "reducing" | "increasing" => {
+  return (
+    type === "stabilisation" || type === "reducing" || type === "increasing"
+  );
+};
+
+export const isValidCountry = (
+  type: string
+): type is "england" | "northern ireland" | "scotland" | "wales" => {
+  return (
+    type === "england" ||
+    type === "northern ireland" ||
+    type === "scotland" ||
+    type === "wales"
+  );
 };
 
 // Validate that dosage has some amount above 0
-export const isValidDosageTotal = (prescriptionType: string, dosage: number): boolean => {
+export const isValidDosageTotal = (
+  prescriptionType: string,
+  dosage: number
+): boolean => {
   return prescriptionType === "increasing" ? true : dosage > 0;
-}; 
+};
