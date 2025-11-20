@@ -1,7 +1,7 @@
 @use "../styles/colors" as colors;
 
 .FieldError {
-  color: colors.$text-error;
+  color: var(--text-error);
   font-size: 0.8rem;
   font-style: italic;
   

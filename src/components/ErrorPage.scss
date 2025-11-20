@@ -23,7 +23,7 @@
 
   &__graphic {
     font-size: 5rem;
-    color: colors.$text-header;
+    color: var(--text-header);
   }
 
   &__title h1 {
@@ -31,14 +31,14 @@
 
     font-size: 2.5rem;
     line-height: 2rem;
-    color: colors.$text-header;
+    color: var(--text-header);
   }
 
   &__content {
     text-align: center;
     font-size: 1.1rem;
     max-width: 30rem;
-    color: colors.$text-secondary;
+    color: var(--text-secondary);
 
     .Button {
       margin-top: 2rem;

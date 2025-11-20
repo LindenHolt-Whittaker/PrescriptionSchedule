@@ -1,4 +1,5 @@
 import Header from "./Header";
+import ThemeToggle from "./ThemeToggle";
 import "./Page.scss";
 
 type PageProps = {
@@ -13,8 +14,13 @@ const Page = ({ title, className, children }: PageProps) => {
       <div className="Page__header">
         <Header />
       </div>
-      <div className="Page__title"><h1>{title}</h1></div>
+      <div className="Page__title">
+        <h1>{title}</h1>
+      </div>
       <div className="Page__content">{children}</div>
+      <div className="Page__themeToggle">
+        <ThemeToggle />
+      </div>
     </div>
   );
 };

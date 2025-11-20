@@ -36,7 +36,7 @@
     label,
     legend,
     fieldset {
-      color: colors.$text-secondary;
+      color: var(--text-secondary);
       margin-bottom: 0.25rem;
       padding: 0;
 
@@ -75,8 +75,8 @@
       border: 1px solid colors.$gray-light;
       border-radius: 0.5rem;
       transition: all 0.2s ease;
-      background-color: colors.$bg-white;
-      color: colors.$text-primary;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
 
       &:focus {
         outline: none;
@@ -98,7 +98,7 @@
         cursor: pointer;
         gap: 0.5rem;
         padding-left: 0.125rem;
-        color: colors.$text-primary;
+        color: var(--text-primary);
       }
     }
 

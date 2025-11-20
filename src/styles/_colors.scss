@@ -1,9 +1,9 @@
 // Primary
+$blue-lightest: #f0f8ff;
+$blue-lighter: #c7e2ff;
+$blue-light: #458cd8;
 $blue: #007bff;
 $blue-dark: #0a63c2;
-$blue-light: #458cd8;
-$blue-lighter: #c7e2ff;
-$blue-lightest: #f0f8ff;
 
 // Alerts
 $red: #cc170a;
@@ -19,16 +19,39 @@ $gray-darker: #495057;
 $gray-darkest: #212529;
 $black: #000000;
 
-// --- Applied colors ---
+// --- Themes ---
 
-// Text
-$text-header: $blue-light;
-$text-primary: $gray-darkest;
-$text-secondary: $gray-darker;
-$text-subtitle: $gray;
-$text-highlight: $blue;
-$text-error: $red;
+// Light theme (default)
+:root,
+:root[data-theme="light"] {
+  --text-header: #{$blue-light};
+  --text-primary: #{$gray-darkest};
+  --text-secondary: #{$gray-darker};
+  --text-subtitle: #{$gray};
+  --text-highlight: #{$blue};
+  --text-error: #{$red};
 
-// Backgrounds
-$bg-white: $white;
-$bg-light: $gray-lighter;
+  --shadow-color: #{$gray-light};
+
+  --bg-primary: #{$white};
+  --bg-secondary: #{$gray-lighter};
+
+  --header-hover: #{$gray-lightest};
+}
+
+// Dark theme
+:root[data-theme="dark"] {
+  --text-header: #{$blue-light};
+  --text-primary: #{$gray-lightest};
+  --text-secondary: #{$gray-lighter};
+  --text-subtitle: #{$gray-light};
+  --text-highlight: #{$blue-lighter};
+  --text-error: #{$red};
+
+  --shadow-color: #{$gray-darker};
+
+  --bg-primary: #{$black};
+  --bg-secondary: #{$gray-darkest};
+
+  --header-hover: #{$gray-dark};
+}

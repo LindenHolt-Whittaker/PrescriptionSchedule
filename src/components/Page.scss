@@ -12,29 +12,32 @@
     z-index: 10;
   }
 
-  &__title h1 {
-    color: colors.$text-header;
+  &__title {
+    background-color: var(--bg-primary);
 
-    font-size: 1.2rem;
-    margin: 1rem 0 0;
-    padding: 0 2rem;
+    h1 {
+      color: var(--text-header);
 
-    @include breakpoints.respond(sm) {
-      font-size: 1.5rem;
-      margin: 1.5rem 0 0;
-      padding: 0 3.5rem;
-    }
+      font-size: 1.2rem;
+      padding: 1rem 2rem 0;
 
-    @include breakpoints.respond(md) {
-      font-size: 2rem;
-      margin: 2rem 0 0;
-      padding: 0 5rem;
+      @include breakpoints.respond(sm) {
+        font-size: 1.5rem;
+        margin: 1.5rem 0 0;
+        padding: 0 3.5rem;
+      }
+
+      @include breakpoints.respond(md) {
+        font-size: 2rem;
+        margin: 2rem 0 0;
+        padding: 0 5rem;
+      }
     }
   }
 
   &__content {
-    color: colors.$text-primary;
-    background-color: colors.$bg-white;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
     flex-grow: 1;
 
     padding: 1rem 2rem;

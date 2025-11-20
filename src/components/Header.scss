@@ -8,8 +8,8 @@
   padding-left: calc(50vw - 50%);
   padding-right: calc(50vw - 50%);
 
-  background-color: colors.$bg-light;
-  box-shadow: 0 0 0.25rem 0 colors.$gray;
+  background-color: var(--bg-secondary);
+  box-shadow: 0 0 0.25rem 0 var(--shadow-color);
 
   &__container {
     display: flex;
@@ -29,7 +29,7 @@
   &__link,
   &__scheduleKey__button {
     &:hover {
-      background-color: colors.$gray-light;
+      background-color: var(--header-hover);
     }
   }
 
@@ -39,10 +39,10 @@
 
   &__link {
     font-weight: 600;
-    color: colors.$blue-light;
+    color: var(--text-header);
     text-decoration: none;
 
-    border: 0 1px 0 1px solid colors.$gray-lightest;
+    border: 0 1px 0 1px solid var(--text-header);
     outline: none;
 
     transition: all 0.2s ease;
@@ -65,7 +65,7 @@
     }
 
     &:focus {
-      background-color: colors.$gray-light;
+      background-color: var(--header-hover);
     }
 
     & .active {
@@ -93,8 +93,8 @@
   &__scheduleKeyInput {
     @include mixins.flex-center;
 
-    color: colors.$gray-darker;
-    background-color: colors.$white;
+    color: var(--text-secondary);
+    background-color: var(--bg-primary);
 
     border: 1px solid colors.$gray-light;
     border-radius: 0.5rem;
@@ -127,6 +127,8 @@
       border: none;
       outline: none;
       font-size: 0.9rem;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
 
       @include mixins.prevent-autofill-styles;
 
@@ -163,8 +165,8 @@
     justify-content: center;
 
     font-size: 1.1rem;
-    color: colors.$gray-darker;
-    background-color: colors.$white;
+    color: var(--text-secondary);
+    background-color: var(--bg-primary);
 
     border: 1px solid colors.$gray-light;
     border-radius: 0 0.5rem 0.5rem 0;
