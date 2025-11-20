@@ -35,6 +35,11 @@
 
   &__linkGroup {
     display: flex;
+    margin-left: 0.5rem;
+
+    @include breakpoints.respond(sm) {
+      margin-left: 0;
+    }
   }
 
   &__link {

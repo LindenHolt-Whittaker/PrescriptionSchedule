@@ -5,13 +5,14 @@
 .Home {
   &__title {
     color: colors.$text-header;
+    
     font-size: 1.5rem;
+    margin: 0;
 
     @include breakpoints.respond(md) {
       font-size: 2.5rem;
+      margin: 1rem 0;
     }
-
-    margin-bottom: 1rem;
   }
 
   &__description {
@@ -36,8 +37,12 @@
   }
 
   &__divider {
-    margin: 3rem 0;
     position: relative;
+    margin: 1rem 0;
+
+    @include breakpoints.respond(md) {
+      margin: 3rem 0;
+    }
 
     &::before {
       content: "";
@@ -59,7 +64,11 @@
   }
 
   &__scheduleKeySection {
-    padding: 2rem 0;
+    padding: 0 0 2rem;
+
+    @include breakpoints.respond(md) {
+      padding: 2rem 0;
+    }
 
     h2 {
       color: colors.$text-header;
