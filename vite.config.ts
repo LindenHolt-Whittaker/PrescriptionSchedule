@@ -7,5 +7,14 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     base: env.VITE_BASE_PATH || '/',
+    test: {
+      globals: true,
+      environment: 'node',
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'html'],
+        exclude: ['**/*.test.ts', '**/*.config.*', 'node_modules/'],
+      },
+    },
   }
 })

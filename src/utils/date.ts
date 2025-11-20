@@ -10,7 +10,7 @@ export const formatLongDate = (date: Date): string => {
 export const formatShortDate = (date: Date): string => {
   return date.toLocaleDateString("en-GB", {
     year: "2-digit",
-    month: "numeric",
+    month: "2-digit",
     day: "2-digit",
   });
 };

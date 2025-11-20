@@ -17,12 +17,7 @@ interface BankHolidaysResponse {
 }
 
 export const fetchUKBankHolidays = async (
-  division:
-    | "england"
-    | "scotland"
-    | "wales"
-    | "northern ireland"
-    | ""
+  division: "england" | "scotland" | "wales" | "northern ireland" | ""
 ): Promise<Set<string>> => {
   if (!division) {
     return new Set();
@@ -32,7 +27,7 @@ export const fetchUKBankHolidays = async (
     england: "england-and-wales",
     wales: "england-and-wales",
     scotland: "scotland",
-    "northern ireland": "northern-ireland"
+    "northern ireland": "northern-ireland",
   } as const;
 
   const apiDivision = divisionMap[division];
@@ -49,7 +44,6 @@ export const fetchUKBankHolidays = async (
     return new Set();
   }
 };
-
 
 export const isBankHoliday = (
   date: Date,
