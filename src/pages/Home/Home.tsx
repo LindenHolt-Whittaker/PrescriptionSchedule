@@ -17,7 +17,7 @@ const Home = () => {
       <div>
         <h1 className="Home__title">Manage Your Prescription Schedule</h1>
         <p className="Home__description">
-          Get your personalized 14-day prescription schedule based on your availability and dosage requirements.
+          Get your personalized 14-day prescription schedule based on availability and dosage requirements.
         </p>
         <Button 
           onClick={() => navigate('/onboarding')}

@@ -80,9 +80,11 @@ Schedules are encoded into compact keys for ease of use (sharing and URL paramet
 ## Areas for improvement
 
 - Better schedule UI by removing redundant no dosage days at start of schedule
-- Improved schedule generation by accounting instances when schedule starts on a bank holiday
+- Improved schedule generation by accounting for instances when schedule starts on a bank holiday
 - Add ErrorBoundary for uncaught Typescript errors, or in the event an API call fails
 - Provide UI theming for light mode/dark mode
 - Replace current schedule edit pattern with side drawer on schedule view for elegant UX
 - Use page by page onboarding wizard in place of full form for ease of use
 - Improved skeleton loader for calendar components
+- Add test coverage for components and hooks
+- Use .env var to determine localhost port number
