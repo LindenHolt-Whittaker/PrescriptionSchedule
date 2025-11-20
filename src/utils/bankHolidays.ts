@@ -22,13 +22,20 @@ export const fetchUKBankHolidays = async (
     | "scotland"
     | "wales"
     | "northern ireland"
+    | ""
 ): Promise<Set<string>> => {
-  const apiDivision = {
+  if (!division) {
+    return new Set();
+  }
+
+  const divisionMap = {
     england: "england-and-wales",
     wales: "england-and-wales",
     scotland: "scotland",
-    "northern ireland": "northern-ireland",
-  }[division];
+    "northern ireland": "northern-ireland"
+  } as const;
+
+  const apiDivision = divisionMap[division];
 
   try {
     const response = await fetch("https://www.gov.uk/bank-holidays.json");
@@ -42,6 +49,7 @@ export const fetchUKBankHolidays = async (
     return new Set();
   }
 };
+
 
 export const isBankHoliday = (
   date: Date,

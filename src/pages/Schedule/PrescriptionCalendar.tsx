@@ -24,7 +24,7 @@ const PrescriptionCalendar = ({ scheduleData }: PrescriptionCalendarProps) => {
           setIsLoading(false);
         }, 500)
       );
-  }, []);
+  }, [scheduleData.country]);
 
   if (isLoading) {
     return (
