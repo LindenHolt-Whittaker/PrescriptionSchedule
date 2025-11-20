@@ -33,7 +33,7 @@
   &:hover:not(:disabled) {
     background-color: colors.$blue-dark;
     transform: translateY(-0.1rem);
-    box-shadow: 0 0.25rem 0.25rem colors.$gray-light;
+    box-shadow: 0 0.25rem 0.25rem var(--shadow-color);
   }
 
   &:focus {

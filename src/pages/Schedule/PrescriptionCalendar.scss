@@ -19,15 +19,15 @@
 
     background: linear-gradient(
       0deg,
-      colors.$gray-lighter 0%,
-      colors.$white 50%,
-      colors.$gray-lighter 100%
+      var(--bg-secondary) 0%,
+      var(--bg-primary) 50%,
+      var(--bg-secondary) 100%
     );
     background-size: 100% 200%;
     animation: shimmer 1.5s ease-in-out infinite;
 
     &__text {
-      color: colors.$gray-dark;
+      color: var(--text-secondary);
       font-size: 1.5rem;
     }
   }

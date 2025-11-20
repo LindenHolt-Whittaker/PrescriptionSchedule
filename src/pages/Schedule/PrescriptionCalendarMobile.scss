@@ -6,7 +6,7 @@
   margin: 0 auto;
 
   &__item {
-    background: colors.$white;
+    background: var(--bg-primary);
     border: 2px solid colors.$gray-lighter;
     border-radius: 0.5rem;
     margin-bottom: 0.75rem;
@@ -25,7 +25,7 @@
     }
 
     &--expanded {
-      box-shadow: 0 0 1rem 0 colors.$gray-light;
+      box-shadow: 0 0 1rem 0 var(--shadow-color);
       border-color: colors.$gray-light;
 
       &.PrescriptionCalendarMobile__item--holiday {
@@ -48,13 +48,13 @@
   &__dayNumber {
     font-size: 0.85rem;
     font-weight: 600;
-    color: colors.$text-primary;
+    color: var(--text-primary);
     margin-right: 1rem;
   }
 
   &__dayName {
     font-size: 0.75rem;
-    color: colors.$text-secondary;
+    color: var(--text-secondary);
   }
 
   &__rightContainer {
@@ -72,20 +72,20 @@
   &__dosage {
     font-size: 1.2rem;
     font-weight: 600;
-    color: colors.$text-primary;
+    color: var(--text-primary);
     margin-right: 1rem;
     font-family: monospace;
 
     &--ml {
       font-size: 0.9rem;
       margin-left: 0.25rem;
-      color: colors.$text-secondary;
+      color: var(--text-secondary);
     }
   }
 
   &__chevron {
     font-size: 0.75rem;
-    color: colors.$text-secondary;
+    color: var(--text-secondary);
     transition: transform 0.2s ease;
   }
 
@@ -113,12 +113,12 @@
     &__heading {
       font-size: 0.875rem;
       margin: 0.75rem 0 0.25rem;
-      color: colors.$text-primary;
+      color: var(--text-primary);
     }
 
     &__dosage {
       margin-top: 0.25rem 0 0.75rem;
-      color: colors.$text-primary;
+      color: var(--text-primary);
 
       &__ml {
         font-size: 0.75rem;
