@@ -130,29 +130,33 @@ const PrescriptionCalendarDesktop = ({
                           ml
                         </span>
                       </div>
-                      {day.dosageDetails.length > 0 && (
+                      <div className="PrescriptionCalendarDesktop__popup__bottomContainer">
                         <div className="PrescriptionCalendarDesktop__popup__dosageDetails">
-                          Dosage details:
-                          {day.dosageDetails.map(({ date, dosage }) => (
-                            <div>
-                              {formatShortDate(date)}: {dosage}
-                              <span className="PrescriptionCalendarDesktop__popup__dosageDetails__ml">
-                                ml
-                              </span>
-                            </div>
-                          ))}
+                          {day.dosageDetails.length > 0 && (
+                            <>
+                              Dosage details:
+                              {day.dosageDetails.map(({ date, dosage }) => (
+                                <div>
+                                  {formatShortDate(date)}: {dosage}
+                                  <span className="PrescriptionCalendarDesktop__popup__dosageDetails__ml">
+                                    ml
+                                  </span>
+                                </div>
+                              ))}
+                            </>
+                          )}
                         </div>
-                      )}
-                      {day.isPickupDay && (
-                        <div className="PrescriptionCalendarDesktop__popup__badge PrescriptionCalendarDesktop__popup__badge--pickup">
-                          ✓ Pickup Day
-                        </div>
-                      )}
-                      {day.isBankHoliday && (
-                        <div className="PrescriptionCalendarDesktop__popup__badge PrescriptionCalendarDesktop__popup__badge--holiday">
-                          ⚑ Bank Holiday
-                        </div>
-                      )}
+                        {day.isPickupDay && (
+                          <div className="PrescriptionCalendarDesktop__popup__badge PrescriptionCalendarDesktop__popup__badge--pickup">
+                            ✓ Pickup Day
+                          </div>
+                        )}
+                        {day.isBankHoliday && (
+                          <div className="PrescriptionCalendarDesktop__popup__badge PrescriptionCalendarDesktop__popup__badge--holiday">
+                            ⚑ Bank Holiday
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}

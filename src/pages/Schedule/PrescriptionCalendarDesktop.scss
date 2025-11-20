@@ -181,6 +181,12 @@
       }
     }
 
+    &__bottomContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+    }
+
     &__dosageDetails {
       text-align: left;
       font-size: 0.75rem;
