@@ -130,17 +130,19 @@ const PrescriptionCalendarDesktop = ({
                           ml
                         </span>
                       </div>
-                      <div className="PrescriptionCalendarDesktop__popup__dosageDetails">
-                        Dosage details:
-                        {day.dosageDetails.map(({ date, dosage }) => (
-                          <div>
-                            {formatShortDate(date)}: {dosage}
-                            <span className="PrescriptionCalendarDesktop__popup__dosageDetails__ml">
-                              ml
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                      {day.dosageDetails.length > 0 && (
+                        <div className="PrescriptionCalendarDesktop__popup__dosageDetails">
+                          Dosage details:
+                          {day.dosageDetails.map(({ date, dosage }) => (
+                            <div>
+                              {formatShortDate(date)}: {dosage}
+                              <span className="PrescriptionCalendarDesktop__popup__dosageDetails__ml">
+                                ml
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       {day.isPickupDay && (
                         <div className="PrescriptionCalendarDesktop__popup__badge PrescriptionCalendarDesktop__popup__badge--pickup">
                           ✓ Pickup Day

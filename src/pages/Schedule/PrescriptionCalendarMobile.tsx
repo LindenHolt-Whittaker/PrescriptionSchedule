@@ -96,17 +96,19 @@ const PrescriptionCalendarMobile = ({
                   ml
                 </span>
               </div>
-              <div className="PrescriptionCalendarMobile__details__dosageDetails">
-                Dosage details:
-                {day.dosageDetails.map(({ date, dosage }) => (
-                  <div>
-                    {formatShortDate(date)}: {dosage}
-                    <span className="PrescriptionCalendarMobile__details__dosageDetails__ml">
-                      ml
-                    </span>
-                  </div>
-                ))}
-              </div>
+              {day.dosageDetails.length > 0 && (
+                <div className="PrescriptionCalendarMobile__details__dosageDetails">
+                  Dosage details:
+                  {day.dosageDetails.map(({ date, dosage }) => (
+                    <div>
+                      {formatShortDate(date)}: {dosage}
+                      <span className="PrescriptionCalendarMobile__details__dosageDetails__ml">
+                        ml
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
               {day.isPickupDay && (
                 <div className="PrescriptionCalendarMobile__badge PrescriptionCalendarMobile__badge--pickup">
                   ✓ Pickup Day
